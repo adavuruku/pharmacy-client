@@ -1,0 +1,35 @@
+export const  SET_ALERT = 'SET_ALERT'
+export const  REMOVE_ALERT = 'REMOVE_ALERT'
+
+//reducers for registration
+export const  REGISTER_SUCCESS = 'REGISTER_SUCCESS'
+export const  REGISTER_FAIL = 'REGISTER_FAIL'
+
+export const  USER_LOADED = 'USER_LOADED'
+export const  AUTH_ERROR = 'AUTH_ERROR'
+export const  LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const  LOGIN_FAIL = 'LOGIN_FAIL'
+export const  LOGOUT = 'LOGOUT'
+export const UPDATE_PROFILE = 'UPDATE_PROFILE'
+export const  GET_PROFILE = 'GET_PROFILE'
+export const  GET_PROFILES = 'GET_PROFILES'
+export const  PROFILE_ERROR = 'PROFILE_ERROR'
+export const  CLEAR_PROFILE = 'CLEAR_PROFILE'
+export const  CLEAR_PROFILES = 'CLEAR_PROFILES'
+export const  ACCOUNT_DELETED = 'ACCOUNT_DELETED'
+export const  GET_REPOS = 'GET_REPOS'
+export const  NO_REPOS = 'NO_REPOS'
+
+export const  GET_ALL_PRODUCT = 'GET_ALL_PRODUCT'
+export const  PRODUCT_BY_CATEGORY = 'PRODUCT_BY_CATEGORY'
+
+export const  ADD_TO_CART = 'ADD_TO_CART'
+export const  REMOVE_FROM_CART = 'REMOVE_FROM_CART'
+export const  EMPTY_CART = 'EMPTY_CART'
+export const INCREASE_CART_ITEM_QUANTITY='INCREASE_CART_ITEM_QUANTITY'
+export const DECREASECART_ITEM_QUANTITY = 'DECREASECART_ITEM_QUANTITY'
+export const  SHOW_ALL_CART = 'SHOW_ALL_CART'
+
+export const  REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST'
+export const  ADD_TO_WISHLIST = 'ADD_TO_WISHLIST'
+export const  EMPTY_WISHLIST = 'EMPTY_WISHLIST'

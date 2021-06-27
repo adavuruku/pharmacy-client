@@ -41,7 +41,7 @@ const CheckOutItems =({productItems, removeItemFromCart, increaseCartItemQuantit
         let discountPrice = product.productPrice - (product.productPrice * ((product.productPercent)/100));
         return (
             
-            <div className="col-md-4 eachItem" key={product.inventoryId}>
+            <div className="col-md-3 eachItem" key={product.inventoryId}>
                 <div className="card mb-4 shadow-sm">
                     <div className="wishContainer">
                         <span className="percent">{product.productPercent}% OFF</span>
@@ -56,7 +56,7 @@ const CheckOutItems =({productItems, removeItemFromCart, increaseCartItemQuantit
                         <div className="row">
                         <p className="card-text font-weight-light mt-0 mb-2">
                             <span ><strong>&#8358; <NumberFormat value={discountPrice} displayType={'text'} thousandSeparator={true} /></strong></span>
-                            <small class="text-muted amountRight">  <a href="#!" onClick={() => incrementQuantity(product.inventoryId)} className="btn btn-sm btn-outline-secondary">+</a><span> {product.quantity} </span><a href="#!" onClick={() => decreaseQuantity(product.inventoryId)} class="btn btn-sm btn-outline-secondary">-</a></small></p>
+                            <small class="text-muted amountRight">  <a href="#!" onClick={() => incrementQuantity(product.inventoryId)} className="btn btn-sm btn-outline-secondary">+</a><span> {product.quantity} </span><a href="#!" onClick={() => decreaseQuantity(product.inventoryId)} className="btn btn-sm btn-outline-secondary">-</a></small></p>
                             <hr className="mt-1 mb-2"/>
                             </div>
                         <div className="d-flex justify-content-between align-items-center">

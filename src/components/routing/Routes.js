@@ -5,6 +5,8 @@ import LoginSignUp from '../auth/LoginSignUp';
 import Landing from '../layout/Landing';
 import CheckOut from '../checkout/CheckOut';
 import WishList from '../wishlist/WishList';
+import CheckOutTwo from '../checkout/CheckOutTwo';
+import PrivateRoute from '../routing/PrivateRoute';
 // import ProfileForm from '../profile-forms/ProfileForm';
 
 // import Profiles from '../profiles/Profiles';
@@ -16,16 +18,17 @@ import WishList from '../wishlist/WishList';
 
 const Routes = props => {
   return (
-    <section className="container">
+    <section>
       <Alert />
       <Switch>
         <Route exact path="/login" component={LoginSignUp} />
         <Route exact path="/home" component={Landing} />
         <Route exact path="/carts" component={CheckOut} />
-        <Route exact path="/wishlist" component={WishList} />
+        <PrivateRoute exact path="/checkout" component={CheckOutTwo} />
+        <PrivateRoute exact path="/wishlist" component={WishList} />
         {/* <Route component={NotFound} /> } */}
       </Switch>
-    </section>
+      </section>
   );
 };
 

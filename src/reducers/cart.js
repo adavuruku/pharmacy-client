@@ -3,9 +3,10 @@ import { ADD_TO_CART, REMOVE_FROM_CART,
       
       const initialState = {
         totalItems:0,
-        cartItems:[]
+        cartItems:[],
+        payType:false
       };
-      
+      //if paytyoe is true then is payOnDelivery else payWithCard
       function cartReducer(state = initialState, action) {
         const { type, payload } = action;
       
@@ -41,6 +42,7 @@ import { ADD_TO_CART, REMOVE_FROM_CART,
                     ...state, cartItems:newcartList, totalItems:newcartList.length
                 }
             case INCREASE_CART_ITEM_QUANTITY:
+                console.log(state)
                 let newcartListINCQTY = [...state.cartItems]
                 for (let i= 0, j = newcartListINCQTY.length; i < j; i++) {
                     if (newcartListINCQTY[i].inventoryId == payload) {
@@ -68,7 +70,7 @@ import { ADD_TO_CART, REMOVE_FROM_CART,
                 }
           case EMPTY_CART:
             return {
-              ...state, cartItems:[], totalItems:0
+              ...state, cartItems:[], totalItems:0, payType:false
             }
           default:
             return state;

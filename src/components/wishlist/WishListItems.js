@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
@@ -32,7 +31,7 @@ const WishListItems =({productItems, removeItemFromWishList, addItemToCart})=>{
                 <div className="card mb-4 shadow-sm">
                     <div className="wishContainer">
                         <span className="percent">{product.productPercent}% OFF</span>
-                        <span className="wish"><a  onClick={() => removeProductFromWishList(product.inventoryId)} href="#!"><i className="fa fa-heart heart"></i></a></span>
+                        <span className="wish" ><a  onClick={() => removeProductFromWishList(product.inventoryId)} href="#!"><i className="fa fa-trash trash" style={{color:'white'}}></i></a></span>
                     </div>
                     
                     <img src={product.productImage} className="rounded" alt= {product.productName} width="100%" />

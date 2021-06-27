@@ -19,7 +19,7 @@ body {
   line-height: 1.6;
   background-color: #fff;
   color: #333;
-  min-height: 75rem;
+  min-height: 50rem;
   /* padding-top: 1rem; */
 }
 
@@ -638,4 +638,8 @@ button {
 
 .eachItem{
   background-color: white;
+}
+.trow{
+  background-color: rgb(209, 206, 206);
+  height: 20px;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
@@ -7,6 +7,10 @@ import PropTypes from 'prop-types';
 const CheckOutSummary =({productsList})=>{
     let total_amount = 0
     let naira = '&#8358;';
+    const history = useHistory();
+    let gotoCheckOut = ()=>{
+        history.push('/checkout')
+    }
     const products = productsList.map((product) =>{
         let discountPrice = product.productPrice - (product.productPrice * ((product.productPercent)/100));
         let selPrice = discountPrice * product.quantity
@@ -37,7 +41,7 @@ const CheckOutSummary =({productsList})=>{
                     <small className="justify-content-end">Add your Delivery address at checkout to see delivery charges</small>
                 </li>
                 <li className="list-group-item d-flex justify-content-between ">
-                <Link to="/checkout"  className="btn btn-sm btn-success add-cart" >Continue to Checkout</Link>
+                <Link to="/checkout"  className="btn btn-sm btn-success add-cart" onClick={() => gotoCheckOut()} >Continue to Checkout</Link>
                 </li>
             </ul>
 

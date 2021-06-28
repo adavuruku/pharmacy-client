@@ -22,9 +22,9 @@ const WishList = ({productItems}) => {
     <div class="row justify-content-centre" style={mystyle}>
         <div className="card text-center" style={{width: '20rem', height: '20rem'}}>
             <div className="card-body">
-                <h1><i className="fa fa-shopping-cart" style={{fontSize: '5rem', color: 'red'}}></i></h1>
-                <h5 className="card-title"><strong>Your cart is empty.</strong></h5>
-                <p className="text-mute">You have not added any item to your cart.</p>
+                <h1><i className="fa fa-heart heart" style={{fontSize: '5rem', color: 'brown'}}></i></h1>
+                <h5 className="card-title"><strong>Your wishlist is empty.</strong></h5>
+                <p className="text-mute">You have not save any item to your wishlist.</p>
                 <Link to="/home" className="btn btn-primary">View Products</Link>
             </div>
         </div>

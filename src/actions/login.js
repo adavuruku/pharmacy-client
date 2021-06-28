@@ -1,10 +1,11 @@
 import { setAlert } from './alert';
 import axios from 'axios'
 import { baseUrl } from '../utils/baseUrl';
+import { loadOrders } from './orders';
 import { 
     REGISTER_FAIL, REGISTER_SUCCESS, 
     USER_LOADED, AUTH_ERROR,
-    LOGIN_SUCCESS, LOGIN_FAIL,LOGOUT, CLEAR_PROFILE
+    LOGIN_SUCCESS, ALL_ORDERS, LOGIN_FAIL,LOGOUT, CLEAR_PROFILE
 } from '../actions/types';
 
 import setAuthToken from '../utils/setAuthToken'
@@ -60,7 +61,8 @@ export const login = ({email, password,history}) => async dispatch => {
             type:LOGIN_SUCCESS,
             payload: res.data
         })
-        dispatch(loadUser()) //load the axios header down with the new token
+        dispatch(loadOrders())
+        // dispatch(loadUser()) //load the axios header down with the new token
         history.push('/home')
         // console.log(history)
     } catch (error) {

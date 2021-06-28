@@ -11,7 +11,7 @@ import { saveCart  } from '../../actions/cart';
 import Button from 'react-bootstrap/Button'
 import Spinner from 'react-bootstrap/Spinner'
 
-const CheckOutSummaryTwo =({productsList,payType,selectedLocation, saveCart,history})=>{
+const CheckOutSummaryTwo =({productsList,payType,selectedLocation, saveCart})=>{
     const [ ispayNow, setispayNow ] = useState(payType); //handle change in payment type selection
     const [ isStartPay, setisStartPay ] = useState(false);
     let total_amount = 0
@@ -30,12 +30,12 @@ const CheckOutSummaryTwo =({productsList,payType,selectedLocation, saveCart,hist
         total_amount +=selPrice
     })
 
+
     const saveFinallyforPayOnDelivery = () => {
-        // console.log('in here -> ',productsList,selectedLocation,ispayNow)
         setisStartPay(true)
-        setTimeout(
-            saveCart(productsList,selectedLocation,ispayNow, history)
-        , 2000);
+        setTimeout(() => {
+            saveCart(productsList,selectedLocation,ispayNow)
+          }, 10000);
     }
   const deliveryInfo = (
         <Accordion defaultActiveKey="0">
@@ -116,5 +116,5 @@ const mapStateToProps = state => ({
     selectedLocation: state.address.selectedLocation,
 });
   
-export default connect(mapStateToProps, {saveCart })(withRouter(CheckOutSummaryTwo));
+export default connect(mapStateToProps, {saveCart })(CheckOutSummaryTwo);
 // export default CartItem

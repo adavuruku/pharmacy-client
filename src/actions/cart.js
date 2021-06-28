@@ -44,7 +44,7 @@ export const decreaseCartItemQuantity = (inventoryId) => async dispatch => {
     }
 };
 
-export const saveCart = (allOrders, location,payType, history) => async dispatch => {
+export const saveCart = (allOrders, location,payType) => async dispatch => {
     const config = {
         headers:{
             'Content-Type':'application/json'
@@ -77,7 +77,7 @@ export const saveCart = (allOrders, location,payType, history) => async dispatch
             type:EMPTY_CART,
             payload: res.data
         })
-      history.push('/home')
+    //   history.push('/home')
     } catch (error) {
     
     }

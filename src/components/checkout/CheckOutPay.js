@@ -7,14 +7,17 @@ import NumberFormat from 'react-number-format';
 import Alert from 'react-bootstrap/Alert'
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner'
 import Card from 'react-bootstrap/Card';
 
 import { saveCart  } from '../../actions/cart';
 // key={product.inventoryId}
-const CheckOutPay = forwardRef(({ cart,selectedLocation, saveCart, history},ref)=>{
+const CheckOutPay = forwardRef(({ cart,selectedLocation, saveCart},ref)=>{
 
     const localPayRef = useRef()
     const [show, setShow] = useState(false);
+
+    const [ isStartPay, setisStartPay ] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -49,9 +52,14 @@ const CheckOutPay = forwardRef(({ cart,selectedLocation, saveCart, history},ref)
         // e.preventDefault();
         if(cardName.length <=5 || cardNumber.length <=15 || cardCvv.length < 3 || cardExpiry.length <5){
             setError('Provide Valid Card Information')
+            setisStartPay(false)
         }else{
-            saveCart(cart.cartItems,selectedLocation,true,history)
-            handleClose()
+            // saveCart(cart.cartItems,selectedLocation,true,history)
+            setisStartPay(true)
+            setTimeout(() => {
+                saveCart(cart.cartItems,selectedLocation,true)
+                handleClose()
+              }, 10000);
         }
       };
     
@@ -82,7 +90,7 @@ const CheckOutPay = forwardRef(({ cart,selectedLocation, saveCart, history},ref)
                     <Form>
                         <div className="row mb-2">
                             <div className="col">
-                                <input type="text" onFocus={()=>setError('')}  name="cardName" className="form-control" placeholder="Name On Card"
+                                <input type="text" disabled = {isStartPay? 'diabled':''} onFocus={()=>setError('')}  name="cardName" className="form-control" placeholder="Name On Card"
                                     value={cardName}
                                     onChange={onChange}
                                     required
@@ -91,7 +99,7 @@ const CheckOutPay = forwardRef(({ cart,selectedLocation, saveCart, history},ref)
                         </div>
                         <div className="row mb-2">
                             <div className="col">
-                                <input type="number" onFocus={()=>setError('')} name="cardNumber" className="form-control" placeholder="Card Number"
+                                <input type="number" disabled = {isStartPay? 'diabled':''} onFocus={()=>setError('')} name="cardNumber" className="form-control" placeholder="Card Number"
                                     value={cardNumber}
                                     onChange={onChange}
                                     required
@@ -100,14 +108,14 @@ const CheckOutPay = forwardRef(({ cart,selectedLocation, saveCart, history},ref)
                         </div>
                         <div className="row mb-2">
                             <div className="form-group col">
-                                <input type="text" onFocus={()=>setError('')} name="cardExpiry" className="form-control" placeholder="11/20"
+                                <input type="text" disabled = {isStartPay? 'diabled':''} onFocus={()=>setError('')} name="cardExpiry" className="form-control" placeholder="11/20"
                                 value={cardExpiry}
                                 onChange={onChange}
                                 required
                                 />
                             </div>
                             <div className="form-group col">
-                                <input type="number" onFocus={()=>setError('')} name="cardCvv" className="form-control" placeholder="CVV"
+                                <input type="number" disabled = {isStartPay? 'diabled':''} onFocus={()=>setError('')} name="cardCvv" className="form-control" placeholder="CVV"
                                 value={cardCvv}
                                 onChange={onChange}
                                 required
@@ -118,12 +126,19 @@ const CheckOutPay = forwardRef(({ cart,selectedLocation, saveCart, history},ref)
 
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleSubmit}>
-                    Confirm Payment
-                </Button>
+                
+                {isStartPay ? 
+                    (<Spinner className="text-centre" animation="grow" variant="dark" />):(
+                        <>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={handleSubmit}>
+                                Confirm Payment
+                            </Button>
+                        </>
+                )}
+                
                 </Modal.Footer>
             </Modal>
         </Fragment>

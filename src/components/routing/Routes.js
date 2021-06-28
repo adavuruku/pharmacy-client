@@ -6,6 +6,7 @@ import Landing from '../layout/Landing';
 import CheckOut from '../checkout/CheckOut';
 import WishList from '../wishlist/WishList';
 import CheckOutTwo from '../checkout/CheckOutTwo';
+import Orders from '../orders/Orders';
 import PrivateRoute from '../routing/PrivateRoute';
 // import ProfileForm from '../profile-forms/ProfileForm';
 
@@ -26,6 +27,7 @@ const Routes = props => {
         <Route exact path="/carts" component={CheckOut} />
         <PrivateRoute exact path="/checkout" component={CheckOutTwo} />
         <PrivateRoute exact path="/wishlist" component={WishList} />
+        <PrivateRoute exact path="/my/orders" component={Orders} />
         {/* <Route component={NotFound} /> } */}
       </Switch>
       </section>

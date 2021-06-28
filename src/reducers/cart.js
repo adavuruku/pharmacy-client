@@ -4,7 +4,7 @@ import { ADD_TO_CART, REMOVE_FROM_CART,
       const initialState = {
         totalItems:0,
         cartItems:[],
-        payType:false
+        payType:false,
       };
       //if paytyoe is true then is payOnDelivery else payWithCard
       function cartReducer(state = initialState, action) {

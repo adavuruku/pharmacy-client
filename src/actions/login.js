@@ -61,6 +61,7 @@ export const login = ({email, password,history}) => async dispatch => {
             type:LOGIN_SUCCESS,
             payload: res.data
         })
+        //load all the user parameters - orders, wishlist, address, profile
         dispatch(loadOrders())
         // dispatch(loadUser()) //load the axios header down with the new token
         history.push('/home')

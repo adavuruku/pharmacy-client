@@ -17,7 +17,7 @@ const Landing =({ getAllProducts, products,loadMore})=>{
         getAllProducts(page);
     }, [page]);
 
-    window.onscroll = debounce(() => {
+    document.getElementsByTagName('body')[0].onscroll = debounce(() => {
         // console.log('c why -> ',window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight)
         // console.log('c why2 -> ',parseInt(document.getElementsByTagName('body')[0].getBoundingClientRect().bottom) <= parseInt(window.innerHeight))
         // return parseInt(el.getBoundingClientRect().bottom) <= parseInt(window.innerHeight);

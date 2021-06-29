@@ -1,6 +1,6 @@
 import { REGISTER_FAIL, REGISTER_SUCCESS, 
   USER_LOADED, AUTH_ERROR,
-  LOGIN_SUCCESS, LOGIN_FAIL,LOGOUT } from '../actions/types';
+  LOGIN_SUCCESS, LOGIN_FAIL,LOGOUT, USER_UPDATE_INFO_SUCCESS } from '../actions/types';
 
 // reducers define the content in the redux stores
 // more of a table in the db(store)
@@ -21,6 +21,11 @@ function loginReducer(state = initialState, action) {
       return {
         ...state, token:payload.tokenValue, user:payload.userInformation, isAuthenticated:true, loading:false
       }
+    
+    case USER_UPDATE_INFO_SUCCESS:
+        return {
+          ...state, user:payload.userInformation
+        }
       
     case REGISTER_FAIL:
     case AUTH_ERROR:

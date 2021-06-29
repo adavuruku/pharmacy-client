@@ -36,9 +36,8 @@ const CheckOutSummary =({productsList})=>{
                     <span>Total </span>
                     <strong> &#8358; <NumberFormat value={total_amount} displayType={'text'} thousandSeparator={true} /> </strong>
                 </li>
-                <li className="list-group-item d-flex justify-content-between">
-                    <span>Delivery Charges </span>
-                    <small className="justify-content-end">Add your Delivery address at checkout to see delivery charges</small>
+                <li className="list-group-item d-flex justify-content-centre">
+                    <small style={{textAlign:'center', fontSize:'0.8em'}}>Add your Delivery address at checkout to see delivery charges</small>
                 </li>
                 <li className="list-group-item d-flex justify-content-between ">
                 <Link to="/checkout"  className="btn btn-sm btn-success add-cart" onClick={() => gotoCheckOut()} >Continue to Checkout</Link>

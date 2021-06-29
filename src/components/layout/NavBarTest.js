@@ -27,14 +27,14 @@ const NavBarTest =({login:{isAuthenticated, loading}, logout,totalItems,totalWis
             <NavDropdown.Item href="/wishlist">
                 <i  className="fa fa-heart heart" style={{color:'brown'}} aria-hidden="true"></i>{' '}<span className='hide-sm'>My Saved Items {totalWishItems > 0 ? totalWishItems:''}</span>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/logout">
-                <i  className="fa fa-sign-out" style={{color:'red'}} aria-hidden="true"></i>{' '}<span className='hide-sm'>Sign Out</span>
+            <NavDropdown.Item href="#!" onClick={logout} >
+                <i  className="fa fa-sign-out"   style={{color:'red'}} aria-hidden="true"></i>{' '}<span className='hide-sm'>Sign Out</span>
             </NavDropdown.Item>
                 
         </NavDropdown>
     )
     const guessLinks =(
-        <Nav.Link className="btn btn-primary btn-sm" href="/wishlist">
+        <Nav.Link className="btn btn-primary btn-sm" style={{color:'white'}} href="/wishlist">
             <i className="fa fa-sign-in" aria-hidden="true"></i> {' '} <span className='hide-sm'>Register / Login</span>
         </Nav.Link>
     )
@@ -47,11 +47,11 @@ const NavBarTest =({login:{isAuthenticated, loading}, logout,totalItems,totalWis
 
     return (
         <Navbar fixed="top" collapseOnSelect expand="md"  bg="dark" variant="dark">
-        <Navbar.Brand ><Link to="/login">Mubby Pharmacy Store</Link></Navbar.Brand>
+        <Navbar.Brand ><Link to="/home">Mubby Pharmacy Store</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="nav-item ml-auto col-6">
-                    <Nav.Link href="/cart">Home</Nav.Link>
+                    <Nav.Link href="/home">Shop</Nav.Link>
                     {/* <Link to="/" className="nav-link" >Home</Link> */}
                     <NavDropdown title="Categories" id="collasible-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -62,7 +62,7 @@ const NavBarTest =({login:{isAuthenticated, loading}, logout,totalItems,totalWis
                     </NavDropdown>
                 </Nav>
                 <Nav className="nav-item ml-auto justify-content-end col-6">
-                        <Nav.Link className="btn btn-success btn-sm " href="/wishlist">
+                        <Nav.Link className="btn btn-success btn-sm " href="/carts">
                         <i className="fa fa-shopping-cart" style={{color:'blue'}}></i> <span className="badge badge-light">{totalItems > 0 ? totalItems:''}</span>
                         </Nav.Link>
 

@@ -21,3 +21,7 @@ let ro = arr.reduce((accumulator, current) => accumulator + current.x, 0);
 let rot = arr.reduce((accumulator, current) => accumulator + (current.x * current.w), 0);
 
 console.log(ro, rot)
+
+let g = []
+
+let re = g.map(e=>e)

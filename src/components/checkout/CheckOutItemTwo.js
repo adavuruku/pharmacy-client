@@ -26,16 +26,8 @@ const CheckOutItems =({productItems, removeItemFromCart, increaseCartItemQuantit
     }
 
     const addProductToWishList = (itemId)=>{
-        // console.log(itemId)
-        for (let i= 0, j = productItems.length; i < j; i++) {
-            if (productItems[i].inventoryId == itemId) {
-                // console.log(product[i])
-                addItemToWishList(productItems[i])
-                removeItemFromCart(itemId)
-                break;
-            }
-        }
-        
+        addItemToWishList(itemId)
+        removeItemFromCart(itemId)
     }
     let naira = '&#8358;';
     let counter = 0

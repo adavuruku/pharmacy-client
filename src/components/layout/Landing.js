@@ -6,19 +6,35 @@ import CartItem from './CartItem'
 import PropTypes from 'prop-types';
 import { getAllProducts } from '../../actions/products';
 
+import debounce from 'lodash.debounce';
 
-const Landing =({ getAllProducts, products})=>{
+
+const Landing =({ getAllProducts, products,loadMore})=>{
     const [ page, setPage ] = useState(1);
 
-    const increasePage = () => setPage(page + 1);
+    // const increasePage = () => setPage(page + 1);
     useEffect(() => {
-        getAllProducts();
+        getAllProducts(page);
     }, [page]);
-    console.log('>- ',products)
+
+    window.onscroll = debounce(() => {
+        // console.log('c why -> ',window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight)
+        // console.log('c why2 -> ',parseInt(document.getElementsByTagName('body')[0].getBoundingClientRect().bottom) <= parseInt(window.innerHeight))
+        // return parseInt(el.getBoundingClientRect().bottom) <= parseInt(window.innerHeight);
+        if (parseInt(document.getElementsByTagName('body')[0].getBoundingClientRect().bottom) <= parseInt(window.innerHeight)) {
+        //   console.log('Call Again')
+          if(loadMore){
+            setPage(page + 1)
+          }else{
+            getAllProducts(page);
+          }
+        }
+      }, 100);
+    // console.log('>- ',products)
     return (
-        <div className='row'>
+        <div className='row mt-4'>
            {/* {products} */}
-           {products.length > 0 ? (<CartItem product={products} />) : (<h4>No profiles found...</h4>)}
+           {products.length > 0 ? (<CartItem product={products} />) : (<h4>No product found...</h4>)}
         </div>
     )
 }
@@ -30,6 +46,7 @@ Landing.propTypes = {
   
 const mapStateToProps = state => ({
     products: state.products.products,
+    loadMore: state.products.loadMore,
 });
   
 export default connect(mapStateToProps, { getAllProducts })(Landing);

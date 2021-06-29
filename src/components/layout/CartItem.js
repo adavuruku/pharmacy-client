@@ -5,9 +5,10 @@ import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import { addItemToCart } from '../../actions/cart';
 import { addItemToWishList } from '../../actions/wishlist';
+import Overlay from 'react-bootstrap/Overlay'
 
 // key={product.inventoryId}
-const CartItem =({product, addItemToCart,addItemToWishList})=>{
+const CartItem =({product, addItemToCart,addItemToWishList,isAuthenticated})=>{
 
     const addProductToCarts = (itemId)=>{
         // console.log(itemId)
@@ -22,15 +23,12 @@ const CartItem =({product, addItemToCart,addItemToWishList})=>{
     }
 
     const addProductToWishList = (itemId)=>{
-        // console.log(itemId)
-        for (let i= 0, j = product.length; i < j; i++) {
-            if (product[i].inventoryId == itemId) {
-                // console.log(product[i])
-                addItemToWishList(product[i])
-                break;
-            }
+        if(isAuthenticated){
+            addItemToWishList(itemId)
+            return
+        }else{
+            alert('Login to Save Item')
         }
-        
     }
 
     let naira = '&#8358;';
@@ -44,7 +42,7 @@ const CartItem =({product, addItemToCart,addItemToWishList})=>{
                         <span className="wish"><a  onClick={() => addProductToWishList(product.inventoryId)} href="#!"><i className="fa fa-heart heart"></i></a></span>
                     </div>
                     
-                    <img src={product.productImage} className="rounded"  alt= {product.productName} width="100%" />
+                    <img src={product.productImage} className="rounded img-responsive"  alt= {product.productName} />
                     <div className="card-body">
                         <p className="card-text font-weight-bolder text-capitalize">{product.productName}</p>
                         <hr className="mb-1"/>
@@ -76,7 +74,8 @@ CartItem.propTypes = {
 };
   
 const mapStateToProps = state => ({
-    products: state.products.products
+    products: state.products.products,
+    isAuthenticated:state.login.isAuthenticated
 });
   
 export default connect(mapStateToProps, { addItemToCart,  addItemToWishList})(CartItem);

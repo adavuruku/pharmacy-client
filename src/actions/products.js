@@ -1,5 +1,7 @@
 // import { setAlert } from './alert';
 import axios from 'axios'
+import { baseUrl } from '../utils/baseUrl';
+import setAuthToken from '../utils/setAuthToken'
 import Product from '../utils/sampleProducts'
 import { 
     GET_ALL_PRODUCT, PRODUCT_BY_CATEGORY
@@ -7,20 +9,26 @@ import {
 
 
 // Get all profiles
-export const getAllProducts = (page = 1) => async (dispatch) => {
+export const getAllProducts = (page) => async (dispatch) => {
     // dispatch({ type: CLEAR_PROFILES })
     try {
-        let limitStep = 10
-        let offset = page * limitStep
-        let limit = (page+1) * limitStep
-        let products = Product.slice(offset, limit)
-
-        // console.log(products);
-        dispatch({
-            type: GET_ALL_PRODUCT,
-            payload: products
-        });
-    
+        const config = {
+            headers:{
+                'Content-Type':'application/json'
+            } 
+        }
+        // console.log(localStorage.token)
+        // setAuthToken(localStorage.token)
+        try {
+            const res = await axios.get(`${baseUrl}/api/user/product/all/${page}`, config)
+            console.log('action',res.data.products, page)
+            dispatch({
+                type: GET_ALL_PRODUCT,
+                payload: res.data.products
+            });
+        } catch (error) {
+            console.log(error)
+        }
     } catch (err) {
     
     }

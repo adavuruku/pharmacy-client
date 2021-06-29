@@ -4,7 +4,8 @@ import { GET_ALL_PRODUCT, PRODUCT_BY_CATEGORY } from '../actions/types';
   // more of a table in the db(store)
   const initialState = {
       products:[],
-      loading:false
+      loading:false,
+      loadMore:true
   };
   
   function productReducer(state = initialState, action) {
@@ -12,8 +13,12 @@ import { GET_ALL_PRODUCT, PRODUCT_BY_CATEGORY } from '../actions/types';
     switch (type) {
       case GET_ALL_PRODUCT:
       case PRODUCT_BY_CATEGORY:
+        state.loadMore = payload.length > 0 ? true:false
+        console.log('from the state',state.products, payload,state.loadMore)
+        // state.products = state.products.concat(payload)
+        // console.log('from the state',state.products, payload)
         return {
-            ...state, products:payload,loading:false
+            ...state,products:[...state.products, ...payload], loading:false
         }
       default:
         return state;

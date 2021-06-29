@@ -17,7 +17,7 @@ const CheckOut = ({cartItems}) => {
       };
       
   return cartItems.length > 0 ? (
-    <div class="row justify-content-between" >
+    <div class="row justify-content-between mt-5 bg-white p-2" >
         <div class="col-md-9 order-md-1 mb-8">
             <div class="row">
                 <CheckOutItems/>

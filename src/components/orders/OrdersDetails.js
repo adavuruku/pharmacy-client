@@ -7,19 +7,6 @@ import { loadOrders } from '../../actions/orders';
 import dateFormat from 'dateformat';
 // key={product.inventoryId}
 const OrdersDetails = ({selectedOrder}) =>{
-    // {
-    //     "productId": "c408d78d-6a70-43b8-8a2d-4f2b04609b57",
-    //     "quantity": 1,
-    //     "unitPrice": "15000.00",
-    //     "productInfo": {
-    //         "productName": "Locatin",
-    //         "productDescription": "Anti Malaria",
-    //         "productMeasure": "Pack",
-    //         "Category": {
-    //             "categoryName": "Pneumon"
-    //         }
-    //     }
-    // },
     const products = selectedOrder?.Items.map((product) =>{
         // let ro = order.Items.reduce((accumulator, current) => accumulator + current.x, 0);
         let totalOrder = product?.Items?.reduce((accumulator, current) => accumulator + (current.unitPrice * current.quantity), 0);

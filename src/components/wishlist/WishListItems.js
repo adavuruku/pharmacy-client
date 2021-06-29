@@ -8,7 +8,6 @@ import { addItemToCart } from '../../actions/cart';
 const WishListItems =({productItems, removeItemFromWishList, addItemToCart})=>{
 
     const removeProductFromWishList = (itemId)=>{
-        console.log(itemId)
         removeItemFromWishList(itemId)
     }
     const addProductToCarts = (itemId)=>{
@@ -24,20 +23,19 @@ const WishListItems =({productItems, removeItemFromWishList, addItemToCart})=>{
     }
     let naira = '&#8358;';
     const products = productItems.map((product) =>{
-        let discountPrice = product.productPrice - (product.productPrice * ((product.productPercent)/100));
+        let discountPrice = product.productInfo.productPrice - (product.productInfo.productPrice * ((product.productInfo.productPercent)/100));
         return (
-            
-            <div className="col-md-3 eachItem" key={product.inventoryId}>
+            <div className="col-md-3 eachItem" key={product.id}>
                 <div className="card mb-4 shadow-sm">
                     <div className="wishContainer">
-                        <span className="percent">{product.productPercent}% OFF</span>
-                        <span className="wish" ><a  onClick={() => removeProductFromWishList(product.inventoryId)} href="#!"><i className="fa fa-trash trash" style={{color:'white'}}></i></a></span>
+                        <span className="percent">{product.productInfo.productPercent}% OFF</span>
+                        <span className="wish" ><a  onClick={() => removeProductFromWishList(product.id)} href="#!"><i className="fa fa-trash trash" style={{color:'white'}}></i></a></span>
                     </div>
                     
-                    <img src={product.productImage} className="rounded" alt= {product.productName} width="100%" />
+                    <img src={product.productInfo.productImage} className="rounded" alt= {product.productInfo.productName} width="100%" />
                     <div className="card-body">
                         
-                        <p className="card-text font-weight-bolder text-capitalize">{product.productName}</p>
+                        <p className="card-text font-weight-bolder text-capitalize">{product.productInfo.productName}</p>
                         <hr className="mb-1"/>
                         <div className="row">
                             <p className="card-text font-weight-light mt-0 mb-2">
@@ -46,7 +44,7 @@ const WishListItems =({productItems, removeItemFromWishList, addItemToCart})=>{
                         <hr className="mt-1 mb-2"/>
                         <div className="d-flex justify-content-between align-items-center">
                             <div className="btn-group add-cart">
-                                <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => addProductToCarts(product.inventoryId)}>Add To Cart</button>
+                                <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => addProductToCarts(product.productInfo.inventoryId)}>Add To Cart</button>
                             </div>
                         </div>
                     </div>

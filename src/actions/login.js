@@ -5,7 +5,8 @@ import { loadOrders } from './orders';
 import { 
     REGISTER_FAIL, REGISTER_SUCCESS, 
     USER_LOADED, AUTH_ERROR,
-    LOGIN_SUCCESS, ALL_ORDERS, LOGIN_FAIL,LOGOUT, CLEAR_PROFILE
+    LOGIN_SUCCESS, USER_UPDATE_INFO_SUCCESS, LOGIN_FAIL,LOGOUT, CLEAR_PROFILE,
+    EMPTY_ORDERS, EMPTY_ADDRESS, EMPTY_WISHLIST
 } from '../actions/types';
 
 import setAuthToken from '../utils/setAuthToken'
@@ -44,7 +45,45 @@ export const register = ({firstName, lastName, email, phone, password,history })
     })
   }
 };
+// updateProfilePassword
+export const updateProfilePassword = ({currentPassword, password}) => async dispatch => {
+    const config = {
+        headers:{
+            'Content-Type':'application/json'
+        } 
+    }
+    const body = JSON.stringify({password, currentPassword})
+    setAuthToken(localStorage.token)
+    try {
+        const res = await axios.patch(`${baseUrl}/api/user/customer/update/password`, body, config)
+        // console.log(res.data)
+        alert('Password Updated')
+    } catch (error) {
+      alert('Fail To Update Password')
+    }
+  };
+export const updateProfile = ({firstName, lastName, phone}) => async dispatch => {
+    const config = {
+        headers:{
+            'Content-Type':'application/json'
+        } 
+    }
 
+    const body = JSON.stringify({firstName, lastName, phone})
+    try {
+        setAuthToken(localStorage.token)
+        const res = await axios.patch(`${baseUrl}/api/user/customer/update`, body, config)
+        console.log(res.data)
+        dispatch({
+            type:USER_UPDATE_INFO_SUCCESS,
+            payload: res.data
+        })
+        alert('Profile Updated')
+    } catch (error) {
+      console.log(error)
+      alert('Fail to Update Profile')
+    }
+  };
 
 export const login = ({email, password,history}) => async dispatch => {
     // console.log('>-email ', email)
@@ -62,8 +101,8 @@ export const login = ({email, password,history}) => async dispatch => {
             payload: res.data
         })
         //load all the user parameters - orders, wishlist, address, profile
-        dispatch(loadOrders())
-        // dispatch(loadUser()) //load the axios header down with the new token
+        // dispatch(loadOrders())
+        dispatch(loadUser()) //load the axios header down with the new token
         history.push('/home')
         // console.log(history)
     } catch (error) {
@@ -76,8 +115,15 @@ export const login = ({email, password,history}) => async dispatch => {
 
 
   export const logout = () => async dispatch => {
+      console.log('I dey log out')
     dispatch({
-        type:CLEAR_PROFILE
+        type:EMPTY_ORDERS
+    })
+    dispatch({
+        type:EMPTY_ADDRESS
+    })
+    dispatch({
+        type:EMPTY_WISHLIST
     })
       dispatch({
           type:LOGOUT

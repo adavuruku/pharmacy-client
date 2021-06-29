@@ -13,6 +13,7 @@ import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
 const persistConfig = {
     key:'root',
     storage,
+    blacklist: ['wishlist','products']
     // whitelist:['auth'], //list of states you want to persist
 }
 const rootReducer = combineReducers({

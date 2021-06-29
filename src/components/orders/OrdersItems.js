@@ -1,4 +1,4 @@
-import React,{useEffect, useRef,forwardRef,useState, useImperativeHandle,Fragment} from 'react';
+import React,{useState} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import NumberFormat from 'react-number-format';
@@ -9,9 +9,7 @@ import dateFormat from 'dateformat';
 const OrdersItems = ({ordersList, loadOrders,selectOrders}) =>{
     // let receiptIdNo = loadOrders.length > 0 ? loadOrders[0].receiptId : null
     const [selectedOrders, isSelectedOrders] = useState(null)
-    useEffect(() => {
-        loadOrders()
-    },[])
+    
 
     const handleChangeAddress = (receiptId)=>{
         isSelectedOrders(receiptId)

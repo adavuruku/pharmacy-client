@@ -7,7 +7,7 @@ import { decreaseCartItemQuantity,
     increaseCartItemQuantity, removeItemFromCart  } from '../../actions/cart';
     import { addItemToWishList } from '../../actions/wishlist';
 // key={product.inventoryId}
-const CheckOutItems =({productItems, removeItemFromCart, increaseCartItemQuantity,decreaseCartItemQuantity,addItemToWishList})=>{
+const CheckOutItems =({productItems, isAuthenticated, removeItemFromCart, increaseCartItemQuantity,decreaseCartItemQuantity,addItemToWishList})=>{
 
     const removeProductFromCart = (itemId)=>{
         console.log(itemId)
@@ -24,17 +24,13 @@ const CheckOutItems =({productItems, removeItemFromCart, increaseCartItemQuantit
         console.log(itemId)
         decreaseCartItemQuantity(itemId)
     }
-
     const addProductToWishList = (itemId)=>{
-        // console.log(itemId)
-        for (let i= 0, j = productItems.length; i < j; i++) {
-            if (productItems[i].inventoryId == itemId) {
-                // console.log(product[i])
-                addItemToWishList(productItems[i])
-                break;
-            }
+        if(isAuthenticated){
+            addItemToWishList(itemId)
+            return
+        }else{
+            alert('Login to Save Item')
         }
-        
     }
     let naira = '&#8358;';
     const products = productItems.map((product) =>{
@@ -78,11 +74,13 @@ CheckOutItems.propTypes = {
     removeItemFromCart: PropTypes.func.isRequired,
     increaseCartItemQuantity: PropTypes.func.isRequired,
     addItemToWishList: PropTypes.func.isRequired,
+    isAuthenticated:PropTypes.bool.isRequired,
     productItems:PropTypes.array.isRequired
 };
   
 const mapStateToProps = state => ({
-    productItems: state.cart.cartItems
+    productItems: state.cart.cartItems,
+    isAuthenticated:state.login.isAuthenticated,
 });
   
 export default connect(mapStateToProps, { decreaseCartItemQuantity, 

@@ -1,14 +1,16 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import OrdersItems from './OrdersItems'
 import OrdersDetails from './OrdersDetails'
+import { loadOrders } from '../../actions/orders';
+import Spinner from '../layout/Spinner';
 
 // import CheckOutSummary from './CheckOutSummary'
 
 import PropTypes from 'prop-types'; //an npm package to validate the prop types send to this component
 
-const Orders = ({ordersItems}) => {
+const Orders = ({ordersItems, isOrderLoading, loadOrders}) => {
 
     const mystyle = {
         minHeight: '50vh',
@@ -16,8 +18,12 @@ const Orders = ({ordersItems}) => {
         alignItems: 'center',
         justifyContent: 'space-around'
     };
+
+    useEffect(() => {
+        loadOrders()
+    },[])
       
-  return ordersItems.length > 0 ? (
+  return !isOrderLoading ? (ordersItems.length > 0 ? (
     <div class="row justify-content-between mt-4" >
         <div class="col-md-6 order-md-1 mb-8" >
             <h5>Your Order Receipt</h5>
@@ -44,18 +50,21 @@ const Orders = ({ordersItems}) => {
             </div>
         </div>
     </div>
-  );
+  )):(<Spinner/>);
 };
 
 // export default CheckOut
 
 Orders.propTypes = {
-    ordersItems: PropTypes.array
+    ordersItems: PropTypes.array,
+    isOrderLoading:PropTypes.bool.isRequired,
+    loadOrders: PropTypes.func.isRequired
 };
   
 const mapStateToProps = state => ({
-    ordersItems: state.orders.orders
+    ordersItems: state.orders.orders,
+    isOrderLoading:state.orders.isOrderLoading
 });
   
 // export default CheckOutAddAddress;
-export default connect(mapStateToProps, null)(Orders);
+export default connect(mapStateToProps, {loadOrders})(Orders);

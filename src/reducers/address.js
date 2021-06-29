@@ -3,6 +3,7 @@ import { ADD_ADDRESS, ALL_ADDRESS,EMPTY_ADDRESS,SELECT_ADDRESS} from '../actions
       const initialState = {
         totalLocaton:0,
         locations:[],
+        isAddressLoading:true,
         selectedLocation:null,
       };
       
@@ -37,7 +38,7 @@ function addressReducer(state = initialState, action) {
         case ALL_ADDRESS:
             state.selectedLocation = payload.locations.length > 0 ? payload.locations[0]:null
             return {
-                ...state, locations:payload.locations, totalLocaton:payload.locations.length
+                ...state, locations:payload.locations, isAddressLoading:false, totalLocaton:payload.locations.length
             }
         case EMPTY_ADDRESS:
         return {

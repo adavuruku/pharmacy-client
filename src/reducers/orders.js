@@ -3,6 +3,7 @@ import { ALL_ORDERS, EMPTY_ORDERS,SELECT_ORDER} from '../actions/types';
       const initialState = {
         totalOrders:0,
         selectedOrder:null,
+        isOrderLoading:true,
         orders:[]
       };
       
@@ -12,7 +13,7 @@ function ordersReducer(state = initialState, action) {
     switch (type) {
         case ALL_ORDERS:
             return {
-                ...state, orders:payload.orders, totalOrders:payload.orders.length
+                ...state, orders:payload.orders, totalOrders:payload.orders.length, isOrderLoading:false
             }
         case SELECT_ORDER:
             let newOrderSelect = null
@@ -34,6 +35,6 @@ function ordersReducer(state = initialState, action) {
         return state;
     }
 }
-      
+
       
       export default ordersReducer;

@@ -7,8 +7,10 @@ import CheckOut from '../checkout/CheckOut';
 import WishList from '../wishlist/WishList';
 import CheckOutTwo from '../checkout/CheckOutTwo';
 import Profile from '../profile/Profile';
+import Admin from '../admin/admin';
 import Orders from '../orders/Orders';
 import PrivateRoute from '../routing/PrivateRoute';
+import AdminRoute from '../routing/adminRoute';
 // import ProfileForm from '../profile-forms/ProfileForm';
 
 // import Profiles from '../profiles/Profiles';
@@ -30,6 +32,7 @@ const Routes = props => {
         <PrivateRoute exact path="/wishlist" component={WishList} />
         <PrivateRoute exact path="/my/orders" component={Orders} />
         <PrivateRoute exact path="/profile" component={Profile} />
+        <AdminRoute exact path="/admin" component={Admin} />
         {/* <Route component={NotFound} /> } */}
       </Switch>
       </section>

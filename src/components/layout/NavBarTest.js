@@ -10,13 +10,21 @@ import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 
-const NavBarTest =({login:{isAuthenticated, loading}, logout,totalItems,totalWishItems})=>{
-
+const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,totalWishItems})=>{
+    // console.log(user)
+    const adminLink = (
+        <NavDropdown.Item href="/admin">
+                <i  className="fa fa-tasks" style={{color:'green'}} aria-hidden="true"></i>{' '}<span className='hide-sm'>Admin Manage Platform</span>
+        </NavDropdown.Item>
+    )
+       
     const authLinks = (
         <NavDropdown title="My Account" id="collasible-nav-dropdown">
             <NavDropdown.Item href="#!1">
                 <span className='hide-sm'>Hi Abdulraheem</span>
             </NavDropdown.Item>
+            <NavDropdown.Divider />
+             {isAuthenticated? user.isAdmin && adminLink :''}
             <NavDropdown.Divider />
             <NavDropdown.Item href="/profile">
                 <i  className="fa fa-user" aria-hidden="true"></i>{' '}<span className='hide-sm'>My Profile</span>
@@ -27,6 +35,7 @@ const NavBarTest =({login:{isAuthenticated, loading}, logout,totalItems,totalWis
             <NavDropdown.Item href="/wishlist">
                 <i  className="fa fa-heart heart" style={{color:'brown'}} aria-hidden="true"></i>{' '}<span className='hide-sm'>My Saved Items {totalWishItems > 0 ? totalWishItems:''}</span>
             </NavDropdown.Item>
+
             <NavDropdown.Item href="#!" onClick={logout} >
                 <i  className="fa fa-sign-out"   style={{color:'red'}} aria-hidden="true"></i>{' '}<span className='hide-sm'>Sign Out</span>
             </NavDropdown.Item>

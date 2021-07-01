@@ -23,7 +23,7 @@ function ordersReducer(state = initialState, action) {
                     break
                 }
             }
-            console.log('In Reducer -> ',payload,newOrderSelect)
+            // console.log('In Reducer -> ',payload,newOrderSelect)
             return {
             ...state, selectedOrder: newOrderSelect
             }

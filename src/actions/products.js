@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { baseUrl } from '../utils/baseUrl';
 import setAuthToken from '../utils/setAuthToken'
-import Product from '../utils/sampleProducts'
+// import Product from '../utils/sampleProducts'
 import { 
     GET_ALL_PRODUCT, PRODUCT_BY_CATEGORY
 } from '../actions/types';
@@ -43,7 +43,7 @@ export const getAllProductsByFilter = (selectedSearch) => async (dispatch) => {
             } 
         }
         const body = JSON.stringify({filter:selectedSearch.filter, page:selectedSearch.page})
-        console.log(body)
+        // console.log(body)
         try {
             const res = await axios.patch(`${baseUrl}/api/user/product/filter`,body, config)
             // console.log('action',res.data.products, page)

@@ -51,7 +51,7 @@ const AddProduct = ()=>{
                 formDataHere.append(key, formData[key]);
             }
             formDataHere.append('productImage',selectedFile)
-            console.log(formDataHere)
+            // console.log(formDataHere)
             const config = {headers:{'Content-Type':'multipart/form-data'}}
             try {
                 setAuthToken(localStorage.token)

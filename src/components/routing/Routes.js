@@ -3,6 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import Alert from '../Alert';
 import LoginSignUp from '../auth/LoginSignUp';
 import Landing from '../layout/Landing';
+import OpenCart from '../layout/OpenCart';
+import NotFound from '../layout/NotFound';
 import CheckOut from '../checkout/CheckOut';
 import WishList from '../wishlist/WishList';
 import CheckOutTwo from '../checkout/CheckOutTwo';
@@ -17,7 +19,6 @@ import AdminRoute from '../routing/adminRoute';
 // import Profile from '../profile/Profile';
 // import Posts from '../posts/Posts';
 // import Post from '../post/Post';
-// import NotFound from '../layout/NotFound';
 
 
 const Routes = props => {
@@ -33,7 +34,8 @@ const Routes = props => {
         <PrivateRoute exact path="/my/orders" component={Orders} />
         <PrivateRoute exact path="/profile" component={Profile} />
         <AdminRoute exact path="/admin" component={Admin} />
-        {/* <Route component={NotFound} /> } */}
+        <PrivateRoute exact path="/products/:inventoryId" component={OpenCart} />
+        <Route component={NotFound} />
       </Switch>
       </section>
   );

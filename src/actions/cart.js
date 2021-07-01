@@ -69,10 +69,10 @@ export const saveCart = (allOrders, location,payType) => async dispatch => {
     
     setAuthToken(localStorage.token)
     const body = JSON.stringify({orders, locationId, paymentType})
-    console.log('Item Action ',body)
+    // console.log('Item Action ',body)
     try {
         const res = await axios.post(`${baseUrl}/api/user/orders/save`, body, config)
-        console.log(res.data)
+        // console.log(res.data)
         dispatch({
             type:EMPTY_CART,
             payload: res.data

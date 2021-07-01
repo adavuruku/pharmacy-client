@@ -20,7 +20,7 @@ export const addItemToWishList = (productId) => async dispatch => {
             setAuthToken(localStorage.token)
             const body = JSON.stringify({productId})
             const res = await axios.post(`${baseUrl}/api/user/wishlist/add`,body, config )
-            console.log(res.data)
+            // console.log(res.data)
             // dispatch({
             //     type:ADD_TO_WISHLIST,
             //     payload: cartItem
@@ -43,7 +43,7 @@ export const loadWishList = () => async dispatch => {
     setAuthToken(localStorage.token)
     try {
         const res = await axios.get(`${baseUrl}/api/user/wishlist/all/1`, config)
-        console.log(res.data)
+        // console.log(res.data)
         dispatch({
             type:LOAD_WISH_LIST,
             payload: res.data
@@ -73,7 +73,7 @@ export const removeItemFromWishList = (wishId ) => async dispatch => {
                 // const body = JSON.stringify({wishId})
                 // console.log('remove',body)
                 const res = await axios.delete(`${baseUrl}/api/user/wishlist/remove`,config )
-                console.log(res.data)
+                // console.log(res.data)
                 dispatch({
                     type:REMOVE_FROM_WISHLIST,
                     payload: wishId

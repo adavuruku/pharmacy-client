@@ -20,7 +20,7 @@ function addressReducer(state = initialState, action) {
             }
 
             state.locations.push(newLocation)
-            console.log('Addedd -> ',newLocation)
+            // console.log('Addedd -> ',newLocation)
             return {
             ...state, totalLocaton:state.locations, selectedLocation: newLocation
             }

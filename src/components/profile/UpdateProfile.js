@@ -22,7 +22,7 @@ const UpdateProfile = ({ updateProfile, userInfo})=>{
         setFormData({ ...formData, [e.target.name]: e.target.value });
     
       const handleProfileSubmit = () => {
-          console.log('hereere')
+        //   console.log('hereere')
         if(firstName.length <=0 || lastName.length <=0 || phone.length <=0){
             setError('Provide All the required Values')
         }else{

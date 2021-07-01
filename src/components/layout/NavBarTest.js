@@ -8,7 +8,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import axios from 'axios'
-
+// import { baseUrl } from '../../utils/baseUrl';
 
 const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,totalWishItems})=>{
     const [categories, loadCategories] = useState([])
@@ -83,7 +83,7 @@ const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,to
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="nav-item ml-auto col-6">
-                    <Nav.Link href="/home">Shop</Nav.Link>
+                    <Nav.Link href="/home">Products</Nav.Link>
                     {/* <Link to="/" className="nav-link" >Home</Link> */}
                     <NavDropdown title="Categories" className="d-lg-none d-md-none" id="collasible-nav-dropdown">
                         {navCategories}

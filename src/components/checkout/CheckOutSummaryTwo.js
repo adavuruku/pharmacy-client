@@ -92,7 +92,6 @@ const CheckOutSummaryTwo =({productsList,payType,selectedLocation, saveCart})=>{
                     <strong> &#8358; <NumberFormat value={total_amount + 1000} displayType={'text'} thousandSeparator={true} /> </strong>
                 </li>
                 <CheckOutPay ref={callPayment}/>
-                {console.log('Yea ',isStartPay)}
                 <li className="list-group-item d-flex justify-content-between ">
                     {isStartPay ? 
                     (<Spinner className="text-centre" animation="grow" variant="dark" />):(<Link to="/checkout"  className="btn btn-sm btn-success add-cart" onClick = {()=>ispayNow ? callPayment.current.changeShow():saveFinallyforPayOnDelivery()} >{ispayNow? 'Continue Payment':'Place Order'} </Link>)}

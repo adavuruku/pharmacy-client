@@ -30,7 +30,7 @@ export const register = ({firstName, lastName, email, phone, password,history })
   const body = JSON.stringify({firstName, lastName, email, phone, password})
   try {
       const res = await axios.post(`${baseUrl}/api/user/customer/register`, body, config)
-      console.log(res.data)
+    //   console.log(res.data)
       dispatch({
           type:REGISTER_SUCCESS,
           payload: res.data
@@ -73,7 +73,7 @@ export const updateProfile = ({firstName, lastName, phone}) => async dispatch =>
     try {
         setAuthToken(localStorage.token)
         const res = await axios.patch(`${baseUrl}/api/user/customer/update`, body, config)
-        console.log(res.data)
+        // console.log(res.data)
         dispatch({
             type:USER_UPDATE_INFO_SUCCESS,
             payload: res.data
@@ -95,7 +95,7 @@ export const login = ({email, password,history}) => async dispatch => {
     const body = JSON.stringify({email, password})
     try {
         const res = await axios.post(`${baseUrl}/api/user/login`, body, config)
-        console.log(res.data)
+        // console.log(res.data)
         dispatch({
             type:LOGIN_SUCCESS,
             payload: res.data
@@ -115,7 +115,7 @@ export const login = ({email, password,history}) => async dispatch => {
 
 
   export const logout = () => async dispatch => {
-      console.log('I dey log out')
+    //   console.log('I dey log out')
     dispatch({
         type:EMPTY_ORDERS
     })

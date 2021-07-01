@@ -4,8 +4,10 @@ import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import { removeItemFromWishList } from '../../actions/wishlist';
 import { addItemToCart } from '../../actions/cart';
+import { withRouter } from 'react-router-dom';
+import Product from '../layout/Product'
 // key={product.inventoryId}
-const WishListItems =({productItems, removeItemFromWishList, addItemToCart})=>{
+const WishListItems =({productItems, removeItemFromWishList, addItemToCart, history})=>{
 
     const removeProductFromWishList = (itemId)=>{
         removeItemFromWishList(itemId)
@@ -21,18 +23,26 @@ const WishListItems =({productItems, removeItemFromWishList, addItemToCart})=>{
         }
         
     }
-    let naira = '&#8358;';
+
+    const openProduct = (inventoryId)=>{
+        // console.log('E DE HERE', inventoryId)
+        if(inventoryId){
+            history.push(`./products/${inventoryId}`)
+        }
+    }
+    
+
     const products = productItems.map((product) =>{
         let discountPrice = product.productInfo.productPrice - (product.productInfo.productPrice * ((product.productInfo.productPercent)/100));
         return (
             <div className="col-md-3 eachItem" key={product.id}>
-                <div className="card mb-4 shadow-sm">
+                <div   className="card mb-4 shadow-sm">
                     <div className="wishContainer">
                         <span className="percent">{product.productInfo.productPercent}% OFF</span>
                         <span className="wish" ><a  onClick={() => removeProductFromWishList(product.id)} href="#!"><i className="fa fa-trash trash" style={{color:'white'}}></i></a></span>
                     </div>
                     
-                    <img src={product.productInfo.productImage} className="rounded" alt= {product.productInfo.productName} width="100%" />
+                    <img src={product.productInfo.productImage}  style={{cursor:'pointer'}} onClick={()=>openProduct(product.productInfo.inventoryId)} className="rounded" alt= {product.productInfo.productName} width="100%" />
                     <div className="card-body">
                         
                         <p className="card-text font-weight-bolder text-capitalize">{product.productInfo.productName}</p>
@@ -66,5 +76,5 @@ const mapStateToProps = state => ({
     productItems: state.wishlist.cartItems
 });
   
-export default connect(mapStateToProps, { removeItemFromWishList,addItemToCart})(WishListItems);
+export default connect(mapStateToProps, { removeItemFromWishList,addItemToCart})(withRouter(WishListItems));
 // export default CartItem

@@ -45,7 +45,7 @@ const UpdateUsers = ()=>{
                 const body = JSON.stringify({email:selectedItem.email, userId:selectedItem.userId, status:selectedItem.status, isAdmin:selectedItem.isAdmin, isConsultant:selectedItem.isConsultant})
                 setAuthToken(localStorage.token)
                 const res = await axios.patch(`${baseUrl}/api/user/role/update`, body, config)
-                console.log(res.data.userInformation)
+                // console.log(res.data.userInformation)
                 seterrorTable(`${res.data.userInformation.firstName } ${res.data.userInformation.lastName } Role Updated !`)
             } catch (error) {
                 console.log(error)

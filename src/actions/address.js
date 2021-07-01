@@ -53,7 +53,7 @@ export const loadAddress = () => async dispatch => {
     setAuthToken(localStorage.token)
     try {
         const res = await axios.get(`${baseUrl}/api/user/location/all/1`, config)
-        console.log(res.data)
+        // console.log(res.data)
         dispatch({
             type:ALL_ADDRESS,
             payload: res.data

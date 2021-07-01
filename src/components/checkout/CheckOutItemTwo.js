@@ -1,5 +1,5 @@
 import React,{Fragment, Section} from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
@@ -7,21 +7,18 @@ import { decreaseCartItemQuantity,
     increaseCartItemQuantity, removeItemFromCart  } from '../../actions/cart';
     import { addItemToWishList } from '../../actions/wishlist';
 // key={product.inventoryId}
-const CheckOutItems =({productItems, removeItemFromCart, increaseCartItemQuantity,decreaseCartItemQuantity,addItemToWishList})=>{
+const CheckOutItems =({productItems, removeItemFromCart, increaseCartItemQuantity,decreaseCartItemQuantity,addItemToWishList,history})=>{
 
     const removeProductFromCart = (itemId)=>{
-        // console.log(itemId)
         removeItemFromCart(itemId)
     }
 
     const incrementQuantity = (itemId)=>{
-        // console.log(itemId)
         increaseCartItemQuantity(itemId)
         
     }
 
     const decreaseQuantity = (itemId)=>{
-        // console.log(itemId)
         decreaseCartItemQuantity(itemId)
     }
 
@@ -29,7 +26,12 @@ const CheckOutItems =({productItems, removeItemFromCart, increaseCartItemQuantit
         addItemToWishList(itemId)
         removeItemFromCart(itemId)
     }
-    let naira = '&#8358;';
+    const openProduct = (inventoryId)=>{
+        // console.log('E DE HERE', inventoryId)
+        if(inventoryId){
+            history.push(`./products/${inventoryId}`)
+        }
+    }
     let counter = 0
     const products = productItems.map((product) =>{
         let discountPrice = product.productPrice - (product.productPrice * ((product.productPercent)/100));
@@ -44,7 +46,7 @@ const CheckOutItems =({productItems, removeItemFromCart, increaseCartItemQuantit
                     <td>Action</td>
                 </tr>
                 <tr>
-                    <td height ="150px" width="180px" scope="row"><img height ="150px" width="180px"   alt={product.productName}src={product.productImage} /></td>
+                    <td height ="150px" width="180px" scope="row"><img style={{cursor:'pointer'}} onClick={()=>openProduct(product.inventoryId)} height ="150px" width="180px"   alt={product.productName}src={product.productImage} /></td>
                     <td>{product.productName}</td>
                     <td><p>
                         <a href="#!" onClick={() => incrementQuantity(product.inventoryId)} className="btn btn-sm btn-outline-secondary">+</a>
@@ -88,5 +90,5 @@ const mapStateToProps = state => ({
 });
   
 export default connect(mapStateToProps, { decreaseCartItemQuantity, 
-    increaseCartItemQuantity, removeItemFromCart ,addItemToWishList})(CheckOutItems);
+    increaseCartItemQuantity, removeItemFromCart ,addItemToWishList})(withRouter(CheckOutItems));
 // export default CartItem

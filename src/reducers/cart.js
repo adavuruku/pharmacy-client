@@ -42,7 +42,7 @@ import { ADD_TO_CART, REMOVE_FROM_CART,
                     ...state, cartItems:newcartList, totalItems:newcartList.length
                 }
             case INCREASE_CART_ITEM_QUANTITY:
-                console.log(state)
+                // console.log(state)
                 let newcartListINCQTY = [...state.cartItems]
                 for (let i= 0, j = newcartListINCQTY.length; i < j; i++) {
                     if (newcartListINCQTY[i].inventoryId == payload) {

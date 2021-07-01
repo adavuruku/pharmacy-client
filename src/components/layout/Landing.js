@@ -4,19 +4,48 @@ import { connect } from 'react-redux';
 import CartItem from './CartItem'
 // import Product from './products'
 import PropTypes from 'prop-types';
-import { getAllProducts } from '../../actions/products';
-
+import { getAllProducts,getAllProductsByFilter } from '../../actions/products';
+import axios from 'axios'
+import { baseUrl } from '../../utils/baseUrl';
 import debounce from 'lodash.debounce';
 
 
-const Landing =({ getAllProducts, products,loadMore})=>{
+const Landing =({ getAllProducts, getAllProductsByFilter, products,loadMore})=>{
+    let searchy = {
+        "filter":{
+            "category":"All",
+            "range":null
+        },
+        page:1
+    }
     const [ page, setPage ] = useState(1);
+    const [categories, loadCategories] = useState([])
+    const [selectedSearch, changeSearch] = useState(searchy)
+    const [categoryId, setCategory] = useState('All')
+    const [range, setRange] = useState(null)
 
     // const increasePage = () => setPage(page + 1);
     useEffect(() => {
-        getAllProducts(page);
-    }, [page]);
+        getAllProductsByFilter(selectedSearch)
+    }, [selectedSearch]);
 
+
+    //fet product categories
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    const fetchCategories = async () => {
+        const config = {headers:{'Content-Type':'application/json'}}
+        try {
+            const res = await axios.get(`${baseUrl}/api/user/category/all/1`, config)
+            let catego = [...res.data.categories]
+            loadCategories(catego)
+        } catch (error) {
+          console.log(error)
+        //   setError('Fail To Add Category')
+        }
+    };
     document.getElementsByTagName('body')[0].onscroll = debounce(() => {
         // console.log('c why -> ',window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight)
         // console.log('c why2 -> ',parseInt(document.getElementsByTagName('body')[0].getBoundingClientRect().bottom) <= parseInt(window.innerHeight))
@@ -24,23 +53,84 @@ const Landing =({ getAllProducts, products,loadMore})=>{
         if (parseInt(document.getElementsByTagName('body')[0].getBoundingClientRect().bottom) <= parseInt(window.innerHeight)) {
         //   console.log('Call Again')
           if(loadMore){
-            setPage(page + 1)
+            // setPage(page + 1)
+            selectedSearch.page += 1
+            changeSearch({...selectedSearch})
           }else{
-            getAllProducts(page);
+            getAllProductsByFilter(selectedSearch);
           }
         }
       }, 100);
-    // console.log('>- ',products)
+
+        // const changeInSearch = (valueId) =>{ 
+        //     changeSearch(valueId);
+        // }
+
+        const handleRangeChange = (start, end) =>{
+            let y = {
+                start, end
+            }
+            setRange({...y})
+            searchy = {
+                "filter":{
+                    "category":categoryId,
+                    "range":range
+                },"page":1
+            }
+            changeSearch({...searchy})
+            console.log(selectedSearch)
+        }
+        const handleCategoryChange = (valueId) =>{
+            setCategory(valueId);
+            searchy = {
+                "filter":{
+                    "category":valueId,
+                    "range":range
+                },
+                "page":1
+            }
+            changeSearch({...searchy})
+        }
+    const navCategories = categories.map(element => (
+        <li class="nav-item">
+            <div className="form-check" key={element.categoryId}>
+                <input className="form-check-input mt-3" type="radio" name="category" onChange={() => handleCategoryChange(`${element.categoryId}`)} id="exampleRadios1" value="option1" checked ={categoryId !== element.categoryId ? false:true} />
+                <label className="form-check-label mt-3" forHtml="exampleRadios1">
+                    {element.categoryName}
+                </label>
+            </div>
+            
+            {/* <Link class="nav-link active" aria-current="page" href={`${element.categoryId}`}></Link> */}
+        </li>
+    )) 
+      
     return (
         <div className='row mt-4'>
-           {/* {products} */}
-           {products.length > 0 ? (<CartItem product={products} />) : (<h4>No product found...</h4>)}
+            <div className='col-2 hide-sm' >
+                <h6>Categories</h6>
+                <ul class="nav flex-column">
+                <li class="nav-item">
+                    <div className="form-check" key='All'>
+                        <input className="form-check-input mt-3" type="radio" name="category" onChange={() => handleCategoryChange('All')} id="exampleRadios1" value="option1" checked ={categoryId !== 'All' ? false:true} />
+                        <label className="form-check-label mt-3" forHtml="exampleRadios1">
+                            All
+                        </label>
+                    </div>
+                </li>
+                {navCategories}
+                </ul>
+            </div>
+            <div className='col-10'>
+                <div className='row'>
+                    {products.length > 0 ? (<CartItem product={products} />) : (<h4>No product found...</h4>)}
+                </div>
+            </div>
         </div>
     )
 }
 Landing.propTypes = {
     getAllProducts: PropTypes.func.isRequired,
-    // addItemToCart: PropTypes.func.isRequired,
+    getAllProductsByFilter: PropTypes.func.isRequired,
     products:PropTypes.array.isRequired
 };
   
@@ -49,4 +139,4 @@ const mapStateToProps = state => ({
     loadMore: state.products.loadMore,
 });
   
-export default connect(mapStateToProps, { getAllProducts })(Landing);
+export default connect(mapStateToProps, { getAllProducts, getAllProductsByFilter })(Landing);

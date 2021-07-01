@@ -84,11 +84,9 @@ const AdminAddCategory = ()=>{
         fetchCategories()
       }, [])
       //loading categories
-      const fetchCategories = async (categoryName) => {
+      const fetchCategories = async () => {
         const config = {headers:{'Content-Type':'application/json'}}
         try {
-            const body = JSON.stringify({categoryName})
-            setAuthToken(localStorage.token)
             const res = await axios.get(`${baseUrl}/api/user/category/all/1`, config)
             let catego = [...res.data.categories]
             loadCategories(catego)

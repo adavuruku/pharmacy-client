@@ -21,10 +21,35 @@ export const getAllProducts = (page) => async (dispatch) => {
         // setAuthToken(localStorage.token)
         try {
             const res = await axios.get(`${baseUrl}/api/user/product/all/${page}`, config)
-            console.log('action',res.data.products, page)
+            // console.log('action',res.data.products, page)
             dispatch({
                 type: GET_ALL_PRODUCT,
                 payload: res.data.products
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    } catch (err) {
+    
+    }
+};
+
+
+export const getAllProductsByFilter = (selectedSearch) => async (dispatch) => {
+    try {
+        const config = {
+            headers:{
+                'Content-Type':'application/json'
+            } 
+        }
+        const body = JSON.stringify({filter:selectedSearch.filter, page:selectedSearch.page})
+        console.log(body)
+        try {
+            const res = await axios.patch(`${baseUrl}/api/user/product/filter`,body, config)
+            // console.log('action',res.data.products, page)
+            dispatch({
+                type: GET_ALL_PRODUCT,
+                payload: {products:res.data.products, page:selectedSearch.page}
             });
         } catch (error) {
             console.log(error)

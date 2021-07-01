@@ -1,27 +1,45 @@
-import React, {Fragment,useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import { baseUrl } from '../../utils/baseUrl';
 import { logout } from '../../actions/login';
 import PropTypes from 'prop-types';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
-import Form from 'react-bootstrap/Form'
-import FormControl from 'react-bootstrap/FormControl'
-import Button from 'react-bootstrap/Button'
+import axios from 'axios'
+
 
 const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,totalWishItems})=>{
+    const [categories, loadCategories] = useState([])
+    useEffect(() => {
+        fetchCategories()
+      }, [])
+
     // console.log(user)
     const adminLink = (
         <NavDropdown.Item href="/admin">
                 <i  className="fa fa-tasks" style={{color:'green'}} aria-hidden="true"></i>{' '}<span className='hide-sm'>Admin Manage Platform</span>
         </NavDropdown.Item>
     )
+
+    
+    const fetchCategories = async (categoryName) => {
+        const config = {headers:{'Content-Type':'application/json'}}
+        try {
+            const res = await axios.get(`${baseUrl}/api/user/category/all/1`, config)
+            let catego = [...res.data.categories]
+            loadCategories(catego)
+        } catch (error) {
+          console.log(error)
+        //   setError('Fail To Add Category')
+        }
+      };
        
     const authLinks = (
         <NavDropdown title="My Account" id="collasible-nav-dropdown">
             <NavDropdown.Item href="#!1">
-                <span className='hide-sm'>Hi Abdulraheem</span>
+                <span className='hide-sm'>{isAuthenticated? 'Hi ' + user.firstName:''}</span>
             </NavDropdown.Item>
             <NavDropdown.Divider />
              {isAuthenticated? user.isAdmin && adminLink :''}
@@ -42,6 +60,7 @@ const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,to
                 
         </NavDropdown>
     )
+
     const guessLinks =(
         <Nav.Link className="btn btn-primary btn-sm" style={{color:'white'}} href="/wishlist">
             <i className="fa fa-sign-in" aria-hidden="true"></i> {' '} <span className='hide-sm'>Register / Login</span>
@@ -54,6 +73,10 @@ const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,to
         </div>
     )
 
+    const navCategories = categories.map(element => (
+        <NavDropdown.Item href={`${element.categoryId}`}>{element.categoryName}</NavDropdown.Item>
+    )) 
+
     return (
         <Navbar fixed="top" collapseOnSelect expand="md"  bg="dark" variant="dark">
         <Navbar.Brand ><Link to="/home">Mubby Pharmacy Store</Link></Navbar.Brand>
@@ -62,13 +85,10 @@ const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,to
                 <Nav className="nav-item ml-auto col-6">
                     <Nav.Link href="/home">Shop</Nav.Link>
                     {/* <Link to="/" className="nav-link" >Home</Link> */}
-                    <NavDropdown title="Categories" id="collasible-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                    <NavDropdown title="Categories" className="d-lg-none d-md-none" id="collasible-nav-dropdown">
+                        {navCategories}
                     </NavDropdown>
+                    
                 </Nav>
                 <Nav className="nav-item ml-auto justify-content-end col-6">
                         <Nav.Link className="btn btn-success btn-sm " href="/carts">

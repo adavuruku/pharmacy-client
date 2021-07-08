@@ -62,17 +62,19 @@ export const updateProfilePassword = ({currentPassword, password}) => async disp
       alert('Fail To Update Password')
     }
   };
-export const updateProfile = ({firstName, lastName, phone}) => async dispatch => {
-    const config = {
-        headers:{
-            'Content-Type':'application/json'
-        } 
-    }
-
-    const body = JSON.stringify({firstName, lastName, phone})
+export const updateProfile = ({firstName, lastName, phone, selectedFile,isImageChange}) => async dispatch => {
+    const config = {headers:{'Content-Type':'multipart/form-data'}}
+    // const body = JSON.stringify({firstName, lastName, phone})
     try {
         setAuthToken(localStorage.token)
-        const res = await axios.patch(`${baseUrl}/api/user/customer/update`, body, config)
+        const formDataHere = new FormData();
+        formDataHere.append('firstName', firstName);
+        formDataHere.append('lastName', lastName);
+        formDataHere.append('phone', phone);
+        if(isImageChange){
+            formDataHere.append('profileImage',selectedFile)
+        }
+        const res = await axios.patch(`${baseUrl}/api/user/customer/update`, formDataHere, config)
         // console.log(res.data)
         dispatch({
             type:USER_UPDATE_INFO_SUCCESS,

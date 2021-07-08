@@ -7,9 +7,14 @@ import Alert from 'react-bootstrap/Alert'
 import PropTypes from 'prop-types';
 import ChangePassword from './ChangePassword';
 import { updateProfile  } from '../../actions/login';
+import avatar from '../chat/avatar.png';
+
 // key={product.inventoryId}
 const UpdateProfile = ({ updateProfile, userInfo})=>{
       const [error, setError] = useState('')
+      const [imgSrc, setimgSrc] = useState(userInfo.profileImage)
+      const [selectedFile, setSelectedFile] = useState(null);
+    const [isImageChange, setisImageChange] = useState(false);
       const [formData, setFormData] = useState({
         firstName: userInfo.firstName,
         lastName: userInfo.lastName,
@@ -26,16 +31,28 @@ const UpdateProfile = ({ updateProfile, userInfo})=>{
         if(firstName.length <=0 || lastName.length <=0 || phone.length <=0){
             setError('Provide All the required Values')
         }else{
-            updateProfile({firstName, lastName, phone});
+            updateProfile({firstName, lastName, phone,selectedFile,isImageChange});
         }
       };
+      const changeHandler = (event) => {
+        setSelectedFile(event.target.files[0]);
+        let url = URL.createObjectURL(event.target.files[0]);
+        setimgSrc(url)
+        setisImageChange(true)
+        console.log(url,event.target.files[0])
+    };
     return (
         <div className="row bg-white p-2">
             <div className="col">
                 <Alert>{error}</Alert>
                 <Form onSubmit={e => e.preventDefault()}>
-                    <Form.Row className="mb-2" >
-                        <Form.Group as={Col} controlId="exampleForm.ControlInput10">
+                    <Form.Row className="mb-3" >
+                        <img src={ imgSrc?imgSrc:avatar} style={{height:'18rem', width:'18rem'}} className="img-thumbnail" width="100%" />
+                        <Form.Group>
+                            <Form.Label className="mt-2">Profile Image</Form.Label>
+                            <Form.File  onChange={changeHandler} id="exampleFormControlFile1"  />
+                        </Form.Group>
+                        <Form.Group as={Col} className="mt-2" controlId="exampleForm.ControlInput10">
                             <Form.Label>Email Address</Form.Label>
                             <Form.Control type="text" 
                             name="email" onFocus={()=>setError('')}

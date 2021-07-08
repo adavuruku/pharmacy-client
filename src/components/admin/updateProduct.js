@@ -20,21 +20,22 @@ const UpdateProduct = ()=>{
       const onChange = e => setSearch(e.target.value);
     
     const handleDelete = async(itemIndex) => {
-        if(itemIndex !== null){
-            const config = {headers:{'Content-Type':'application/json'}}
-            try {
-                let selectedItem= searchResult[itemIndex].inventoryId
-
-                setAuthToken(localStorage.token)
-                const res = await axios.delete(`${baseUrl}/api/user/products/delete/${selectedItem}`, config)
-                // console.log(res.data.userInformation)
-                searchResult.splice(itemIndex,1)
-                // setsearchResult(searchResult => [...searchResult.filter(el=> el.inventoryId !== selectedItem.inventoryId)])
-                setsearchResult(searchResult => [...searchResult])
-                seterrorTable(`${res.data.products.productName } Deleted !`)
-            } catch (error) {
-                console.log(error)
-                seterrorTable('Fail To Update')
+        if(window.confirm('Do you want to delete product?')){
+            if(itemIndex !== null){
+                const config = {headers:{'Content-Type':'application/json'}}
+                try {
+                    let selectedItem= searchResult[itemIndex].inventoryId
+                    setAuthToken(localStorage.token)
+                    const res = await axios.delete(`${baseUrl}/api/user/products/delete/${selectedItem}`, config)
+                    // console.log(res.data.userInformation)
+                    searchResult.splice(itemIndex,1)
+                    // setsearchResult(searchResult => [...searchResult.filter(el=> el.inventoryId !== selectedItem.inventoryId)])
+                    setsearchResult(searchResult => [...searchResult])
+                    seterrorTable(`${res.data.products.productName } Deleted !`)
+                } catch (error) {
+                    console.log(error)
+                    seterrorTable('Fail To Update')
+                }
             }
         }
       };

@@ -10,6 +10,7 @@ import setAuthToken from '../../utils/setAuthToken'
 import Spinner from 'react-bootstrap/Spinner'
 import SpinnerTwo from '../layout/Spinner';
 
+
 const UpdateUsers = ()=>{
       const [error, setError] = useState('')
       const [errorTable, seterrorTable] = useState('')
@@ -36,6 +37,7 @@ const UpdateUsers = ()=>{
         setsearchResult([...searchResult])
         // console.log('na here ',searchResult)
     }
+
 
     const handleUpdate = async(itemIndex) => {
         if(itemIndex !== null){
@@ -79,7 +81,7 @@ const UpdateUsers = ()=>{
         <div className="row bg-white p-2">
             <div className="col-12">
                 {error.length > 0 ? (<Alert>{error}</Alert>):''}
-                <h6>.:. Search</h6>
+                <h6>.:. Search for users</h6>
                 <form onSubmit={e => e.preventDefault()}>
                     <div className="row">
                         <div className="col">
@@ -123,7 +125,7 @@ const UpdateUsers = ()=>{
                                         <td><input className="form-check-input" onChange={()=>handleChangeRole(i, 'isAdmin')} checked={element.isAdmin} type="checkbox"  id="flexCheckDefault"/></td>
                                         <td><input className="form-check-input" onChange={()=>handleChangeRole(i, 'isConsultant')}checked={element.isConsultant} type="checkbox"  id="flexCheckDefault"/></td>
                                         <td><input className="form-check-input" onChange={()=>handleChangeRole(i, 'status')} checked={element.status} type="checkbox"  id="flexCheckDefault"/></td>
-                                        <td><button type="button"  onClick = {()=>handleUpdate(i)} class="btn btn-primary">Update</button></td>
+                                        <td><button type="button"  onClick = {()=>handleUpdate(i)} class="btn btn-primary"><i  className="fa fa-pencil" aria-hidden="true"></i></button></td>
                                     </tr>
                                 ))
                             }

@@ -7,7 +7,8 @@ import NumberFormat from 'react-number-format';
 import Alert from 'react-bootstrap/Alert'
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import Spinner from 'react-bootstrap/Spinner'
+// import Spinner from 'react-bootstrap/Spinner'
+import Spinner from '../layout/Spinner'
 import Card from 'react-bootstrap/Card';
 
 import { saveCart  } from '../../actions/cart';

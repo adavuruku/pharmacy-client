@@ -37,7 +37,7 @@ const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,to
       };
        
     const authLinks = (
-        <NavDropdown title="My Account" id="collasible-nav-dropdown">
+        <NavDropdown title="My Account"   id="collasible-nav-dropdown">
             <NavDropdown.Item href="#!1">
                 <span className='hide-sm'>{isAuthenticated? 'Hi ' + user.firstName:''}</span>
             </NavDropdown.Item>
@@ -88,10 +88,11 @@ const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,to
                     <NavDropdown title="Categories" className="d-lg-none d-md-none" id="collasible-nav-dropdown">
                         {navCategories}
                     </NavDropdown>
+                    <Nav.Link href="/chat">Chat Consultants</Nav.Link>
                     
                 </Nav>
-                <Nav className="nav-item ml-auto justify-content-end col-6">
-                        <Nav.Link className="btn btn-success btn-sm " href="/carts">
+                <Nav className="nav-item ml-auto justify-content-end mr-50 col-6">
+                        <Nav.Link className="btn btn-white btn-sm " href="/carts">
                         <i className="fa fa-shopping-cart" style={{color:'blue'}}></i> <span className="badge badge-light">{totalItems > 0 ? totalItems:''}</span>
                         </Nav.Link>
 

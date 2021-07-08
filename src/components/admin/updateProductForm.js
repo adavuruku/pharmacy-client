@@ -1,78 +1,63 @@
-import React,{useState, useEffect} from 'react';
+import React,{useEffect, forwardRef, useRef,useState, useImperativeHandle,Fragment} from 'react';
+import { connect } from 'react-redux';
+import Modal from "react-bootstrap/Modal";
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import NumberFormat from 'react-number-format';
+import Alert from 'react-bootstrap/Alert'
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import setAuthToken from '../../utils/setAuthToken'
 import axios from 'axios'
 import { baseUrl } from '../../utils/baseUrl';
 // import Spinner from 'react-bootstrap/Spinner'
 import Spinner from '../layout/Spinner'
-import Button from 'react-bootstrap/Button'
-import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import Alert from 'react-bootstrap/Alert'
-import setAuthToken from '../../utils/setAuthToken'
+import Col from 'react-bootstrap/Col';
 
+import { saveCart  } from '../../actions/cart';
+// key={product.inventoryId}
+const UpdateProductForm = forwardRef(({},ref)=>{
 
-const AddProduct = ()=>{
-      const [error, setError] = useState('')
-      const [categories, loadCategories] = useState([])
-      const [imgSrc, setimgSrc] = useState(null)
-      const [isSubmitting, setisSubmitting] = useState(false)
-      const [selectedFile, setSelectedFile] = useState(null);
-      const [formData, setFormData] = useState({
+    const localPayRef = useRef()
+    const [show, setShow] = useState(false);
+
+    const [categories, loadCategories] = useState([])
+    const [imgSrc, setimgSrc] = useState(null)
+    const [isSubmitting, setisSubmitting] = useState(false)
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [isImageChange, setisImageChange] = useState(false);
+    const [error, setError] = useState('')
+    const [formData, setFormData] = useState({
         productName: '',
+        productId: '',
         productDescription: '',
         productPrice: '',
         productMeasure: '',
         productCategory: '',
         productPercent: 0,
+    });
+
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    useImperativeHandle(ref, () => {
+        return {
+            changeShow: (element)=>{
+                setFormData({...element,productCategory:element.Category.categoryId,productId:element.inventoryId})
+                setimgSrc(element.productImage)
+                // console.log(element)
+                handleShow()
+            }
+        }
       });
 
-      
-    
-      const { productName,productDescription,productPrice, productMeasure, productCategory, productPercent} = formData;
-    
-        const onChange = e =>{
-            setFormData({ ...formData, [e.target.name]: e.target.value });
-        }
-        const changeHandler = (event) => {
-            setSelectedFile(event.target.files[0]);
-            // let reader = new FileReader();
-            // let url = reader.readAsDataURL(event.target.files[0]);
-            let url = URL.createObjectURL(event.target.files[0]);
-            setimgSrc(url)
-            console.log(url,event.target.files[0])
-        };
-
-    //create new product
-      const handleProductSubmit = async() => {
-        setisSubmitting(true)
-        if(productName.length <=0 || productDescription.length <=0 ||productPrice.length <=0||productMeasure.length <=0||productCategory.length <=0 ||  productPercent < 0 || imgSrc.length <=0){
-            setError('Provide All the needed Information')
-        }else{
-            const formDataHere = new FormData();
-            // Object.keys(object).forEach(key => formData.append(key, object[key]));
-            for ( var key in formData ) {
-                formDataHere.append(key, formData[key]);
-            }
-            formDataHere.append('productImage',selectedFile)
-            // console.log(formDataHere)
-            const config = {headers:{'Content-Type':'multipart/form-data'}}
-            try {
-                setAuthToken(localStorage.token)
-                const res = await axios.post(`${baseUrl}/api/user/product/add`, formDataHere, config)
-                setError('Created Succesfully')
-            } catch (error) {
-                console.log(error)
-                setError('Fail To Add Category')
-            }
-        }
-        setisSubmitting(false)
-      };
-
-
+      //this deals with the categories
 
       useEffect(() => {
         fetchCategories()
-        // console.log('in fetch')
       }, [])
+
       //loading categories
       const fetchCategories = async (categoryName) => {
         const config = {headers:{'Content-Type':'application/json'}}
@@ -88,13 +73,66 @@ const AddProduct = ()=>{
       };
 
       
-      //load options for select categpries
-    let categos = categories.map(el=> <option key={el.categoryId} value={el.categoryId} >{el.categoryName}</option>)
+      
+    
+      const { productId, productName,productDescription,productPrice, productMeasure, productCategory, productPercent} = formData;
+        const onChange = e =>{
+            setFormData({ ...formData, [e.target.name]: e.target.value });
+        }
+    
+       //create new product
+       const handleProductSubmit = async() => {
+        setisSubmitting(true)
+        if(productName.length <=0 || productDescription.length <=0 ||productPrice.length <=0||productMeasure.length <=0||productCategory.length <=0 ||  productPercent < 0 || imgSrc.length <=0){
+            setError('Provide All the needed Information')
+        }else{
+            const formDataHere = new FormData();
+            // Object.keys(object).forEach(key => formData.append(key, object[key]));
+            for ( var key in formData ) {
+                formDataHere.append(key, formData[key]);
+            }
+            if(isImageChange){
+                formDataHere.append('productImage',selectedFile)
+            }
+            const config = {headers:{'Content-Type':'multipart/form-data'}}
+            try {
+                setAuthToken(localStorage.token)
+                const res = await axios.patch(`${baseUrl}/api/user/product/update`, formDataHere, config)
+                setError('Succesfully Updated')
+            } catch (error) {
+                console.log(error)
+                setError('Fail To Add Category')
+            }
+        }
+        setisSubmitting(false)
+      }
+
+    
+    const changeHandler = (event) => {
+        setSelectedFile(event.target.files[0]);
+        let url = URL.createObjectURL(event.target.files[0]);
+        setimgSrc(url)
+        setisImageChange(true)
+        console.log(url,event.target.files[0])
+    };
+
+    let categos = categories.map(el=> <option key={el.categoryId} value={el.categoryId} selected = {productCategory === el.categoryId? true:false}  >{el.categoryName}</option>)
+
     return (
-        <div className="row bg-white p-2">
-            <div className="col-7">
+        <Fragment  >
+            <Modal size="md" aria-labelledby="contained-modal-title-vcenter" centered show={show}  onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        <h5>Update Products</h5>
+                    {error.length >0 && (
+                    <Alert variant='danger'>
+                        {error}
+                    </Alert>)
+                    }</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
                     {error.length > 0 ? (<Alert>{error}</Alert>):''}
-                    <h6>.:. Create Product</h6>
+                    <h6>.:. Update Product</h6>
                     <Form onSubmit={e => e.preventDefault()}>
                         <Form.Row className="mb-2" >
                             <img src={imgSrc} style={{height:'20rem', width:'20rem'}} className="img-thumbnail" width="100%" />
@@ -145,9 +183,10 @@ const AddProduct = ()=>{
                                     onChange={onChange}
                                     onFocus={()=>setError('')}
                                     >
-                                        <option value="Pack" >Pack</option>
-                                        <option value="Pieces" >Pieces</option>
-                                        <option value="Dozens" >Dozens</option>
+                                        
+                                        <option value="Pieces" selected = {productMeasure === 'Pieces'? true:false} >Pieces</option>
+                                        <option value="Pack" selected = {productMeasure === 'Pack'? true:false}>Pack</option>
+                                        <option value="Dozens" selected = {productMeasure === 'Dozens'? true:false} >Dozens</option>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -159,15 +198,20 @@ const AddProduct = ()=>{
                                 required/>
                             </Form.Group>
                         </Form.Row>
-                        {isSubmitting ? (<Spinner className="text-centre" animation="grow" variant="dark" />):(<Button onClick={handleProductSubmit} variant="primary mt-2" >
+                        {isSubmitting ? (<Spinner className="text-centre" animation="grow" variant="dark" />):(<Button onClick={handleProductSubmit} variant="primary mt-2 justify-content-end" >
                             Save Product
                         </Button>)}
                     </Form>
-            </div>
-        </div>
+
+                </Modal.Body>
+                <Modal.Footer>
+                </Modal.Footer>
+            </Modal>
+        </Fragment>
         );
-    }
-  
+    })
+
 // export default CheckOutAddAddress;
-export default AddProduct;
+// export default UpdateProductForm;
+export default ({forwardRef:true},UpdateProductForm);
 // export default CartItem

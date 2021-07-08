@@ -9,7 +9,7 @@ import {
 
 
 export const addItemToWishList = (productId) => async dispatch => {
-    console.log('E reach ',productId)
+    // console.log('E reach ',productId)
     if(productId){
         try {
             const config = {

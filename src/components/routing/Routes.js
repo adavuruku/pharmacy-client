@@ -13,6 +13,7 @@ import Admin from '../admin/admin';
 import Orders from '../orders/Orders';
 import PrivateRoute from '../routing/PrivateRoute';
 import AdminRoute from '../routing/adminRoute';
+import ChatHome from '../chat/ChatHome';
 // import ProfileForm from '../profile-forms/ProfileForm';
 
 // import Profiles from '../profiles/Profiles';
@@ -33,6 +34,7 @@ const Routes = props => {
         <PrivateRoute exact path="/wishlist" component={WishList} />
         <PrivateRoute exact path="/my/orders" component={Orders} />
         <PrivateRoute exact path="/profile" component={Profile} />
+        <PrivateRoute exact path="/chat" component={ChatHome } />
         <AdminRoute exact path="/admin" component={Admin} />
         <PrivateRoute exact path="/products/:inventoryId" component={OpenCart} />
         <Route component={NotFound} />

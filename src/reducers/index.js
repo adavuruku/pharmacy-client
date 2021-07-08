@@ -8,6 +8,7 @@ import orders from './orders'
 import wishlist from './wishlist'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
 
 const persistConfig = {
@@ -16,6 +17,8 @@ const persistConfig = {
     blacklist: ['wishlist','products']
     // whitelist:['auth'], //list of states you want to persist
 }
+
+
 const rootReducer = combineReducers({
     alert,login,wishlist, products,cart, address, orders
 })

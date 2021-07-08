@@ -16,18 +16,23 @@ const AdminNav = ({handlePageChange,logout}) => {
 
   return (
         <ListGroup as="ul">
-            <ListGroup.Item as="li" active = {(selectedNav == 'Manage Product Category')? true:false } style={{cursor:'pointer'}}
+            <ListGroup.Item as="li" active = {(selectedNav === 'Manage Product Category')? true:false } style={{cursor:'pointer'}}
                 onClick = {()=>{handleNavChange('Manage Product Category') }}
             >
                 <i  className="fa fa-gear" aria-hidden="true"></i>  Manage Product Category
             </ListGroup.Item>
 
-            <ListGroup.Item as="li" active = {(selectedNav == 'Add Product')? true:false } style={{cursor:'pointer'}}
+            <ListGroup.Item as="li" active = {(selectedNav === 'Add Product')? true:false } style={{cursor:'pointer'}}
                 onClick = {()=>{handleNavChange('Add Product') }}
             >
                 <i  className="fa fa-plus-square" aria-hidden="true"></i> Add Product
             </ListGroup.Item>
-            <ListGroup.Item as="li" active = {(selectedNav == 'Change User Roles')? true:false } style={{cursor:'pointer'}}
+            <ListGroup.Item as="li" active = {(selectedNav === 'Update Product')? true:false } style={{cursor:'pointer'}}
+                onClick = {()=>{handleNavChange('Update Product') }}
+            >
+                <i  className="fa fa-pencil" aria-hidden="true"></i> Update Product
+            </ListGroup.Item>
+            <ListGroup.Item as="li" active = {(selectedNav === 'Change User Roles')? true:false } style={{cursor:'pointer'}}
                 onClick = {()=>{handleNavChange('Change User Roles') }}
             >
                 <i  className="fa fa-cogs" aria-hidden="true"></i> Change User Roles

@@ -5,8 +5,9 @@ import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import { addItemToCart } from '../../actions/cart';
 import { addItemToWishList } from '../../actions/wishlist';
-import Overlay from 'react-bootstrap/Overlay'
 import Product from './Product';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // key={product.inventoryId}
 const CartItem =({product, addItemToCart,addItemToWishList,isAuthenticated, history})=>{
 
@@ -31,6 +32,9 @@ const CartItem =({product, addItemToCart,addItemToWishList,isAuthenticated, hist
     }
 
     const addProductToWishList = (itemId)=>{
+        toast.success("Success Notification !", {
+            position: toast.POSITION.TOP_CENTER
+          });
         if(isAuthenticated){
             addItemToWishList(itemId)
             return

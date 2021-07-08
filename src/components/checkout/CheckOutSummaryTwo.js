@@ -9,7 +9,8 @@ import CheckOutAddress from './CheckOutAddress'
 import CheckOutPay from './CheckOutPay'
 import { saveCart  } from '../../actions/cart';
 import Button from 'react-bootstrap/Button'
-import Spinner from 'react-bootstrap/Spinner'
+// import Spinner from 'react-bootstrap/Spinner'
+import Spinner from '../layout/Spinner'
 
 const CheckOutSummaryTwo =({productsList,payType,selectedLocation, saveCart})=>{
     const [ ispayNow, setispayNow ] = useState(payType); //handle change in payment type selection
@@ -35,7 +36,7 @@ const CheckOutSummaryTwo =({productsList,payType,selectedLocation, saveCart})=>{
         setisStartPay(true)
         setTimeout(() => {
             saveCart(productsList,selectedLocation,ispayNow)
-          }, 10000);
+          }, 7000);
     }
   const deliveryInfo = (
         <Accordion defaultActiveKey="0">

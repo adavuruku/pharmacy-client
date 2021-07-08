@@ -3,6 +3,7 @@ import AdminNav from './adminNav'
 import AdminAddCategory from './adminAddCategory'
 import AddProduct from './addProduct'
 import UpdateUsers from './updateUsers'
+import UpdateProduct from './updateProduct'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -24,6 +25,7 @@ const Admin = () => {
                 {selectedPage === 'Manage Product Category' && <AdminAddCategory/>}
                 {selectedPage === 'Add Product' && <AddProduct/>}
                 {selectedPage === 'Change User Roles' && <UpdateUsers/>}
+                {selectedPage === 'Update Product' && <UpdateProduct/>}
 {/*selectedPage === 'My Address' && <ProfileAddress/>}
                 {selectedPage === 'Update Profile' && <UpdateProfile/>} */}
             </div>

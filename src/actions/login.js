@@ -6,7 +6,7 @@ import {
     REGISTER_FAIL, REGISTER_SUCCESS, 
     USER_LOADED, AUTH_ERROR,
     LOGIN_SUCCESS, USER_UPDATE_INFO_SUCCESS, LOGIN_FAIL,LOGOUT, CLEAR_PROFILE,
-    EMPTY_ORDERS, EMPTY_ADDRESS, EMPTY_WISHLIST
+    EMPTY_ORDERS, EMPTY_ADDRESS, EMPTY_WISHLIST, EMPTY_CART
 } from '../actions/types';
 
 import setAuthToken from '../utils/setAuthToken'
@@ -116,19 +116,34 @@ export const login = ({email, password,history}) => async dispatch => {
   };
 
 
-  export const logout = () => async dispatch => {
-    //   console.log('I dey log out')
-    dispatch({
-        type:EMPTY_ORDERS
-    })
-    dispatch({
-        type:EMPTY_ADDRESS
-    })
-    dispatch({
-        type:EMPTY_WISHLIST
-    })
-      dispatch({
-          type:LOGOUT
-      })
+  export const logout = (history) => async dispatch => {
+    const config = {
+        headers:{
+            'Content-Type':'application/json'
+        } 
+    }
+    try {
+        setAuthToken(localStorage.token)
+        const res = await axios.get(`${baseUrl}/api/user/logout`, config)
+        dispatch({
+            type:EMPTY_ORDERS
+        })
+        dispatch({
+            type:EMPTY_CART
+        })
+        dispatch({
+            type:EMPTY_ADDRESS
+        })
+        dispatch({
+            type:EMPTY_WISHLIST
+        })
+        dispatch({
+            type:LOGOUT
+        })
+        history.push('/home')
+    } catch (error) {
+        dispatch(setAlert('Unable to Sign Out Retry', 'danger'))
+    }
+    
   };
 

@@ -92,7 +92,7 @@ const OpenCart =({isAuthenticated, addItemToCart,  addItemToWishList,history})=>
         <div className="row">
         <div className="row mt-5 bg-light p-4">
             <div className="col-4">
-                <img src={product.productImage} className="rounded img-responsive"  alt= {product.productName} />
+                <img src={product.productImage} className="rounded img-responsive"  style={{height:'450px', width:'400px'}} alt= {product.productName} />
             </div>
             <div className="col-8 bg-white p-3" >
                 <p className="card-text font-weight-bolder text-capitalize mb-3"><strong>Category </strong> : {product.productName}</p>

@@ -58,8 +58,8 @@ export const saveCart = (allOrders, location,payType) => async dispatch => {
     for(let i =0, j= allOrders.length; i <j; i++){
         let discountPrice = allOrders[i].productPrice - (allOrders[i].productPrice * ((allOrders[i].productPercent)/100));
         let newOrder ={
-            // productId:allOrders[i].inventoryId,
-            productId:'c408d78d-6a70-43b8-8a2d-4f2b04609b57',
+            productId:allOrders[i].inventoryId,
+            // productId:'c408d78d-6a70-43b8-8a2d-4f2b04609b57',
             quantity:allOrders[i].quantity,
             unitPrice:discountPrice
         }

@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { baseUrl } from '../../utils/baseUrl';
 import { logout } from '../../actions/login';
 import PropTypes from 'prop-types';
@@ -8,9 +8,10 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import axios from 'axios'
+
 // import { baseUrl } from '../../utils/baseUrl';
 
-const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,totalWishItems})=>{
+const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,totalWishItems, history})=>{
     const [categories, loadCategories] = useState([])
     useEffect(() => {
         fetchCategories()
@@ -54,7 +55,7 @@ const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,to
                 <i  className="fa fa-heart heart" style={{color:'brown'}} aria-hidden="true"></i>{' '}<span className='hide-sm'>My Saved Items {totalWishItems > 0 ? totalWishItems:''}</span>
             </NavDropdown.Item>
 
-            <NavDropdown.Item href="#!" onClick={logout} >
+            <NavDropdown.Item href="#!" onClick={()=>logout(history)} >
                 <i  className="fa fa-sign-out"   style={{color:'red'}} aria-hidden="true"></i>{' '}<span className='hide-sm'>Sign Out</span>
             </NavDropdown.Item>
                 
@@ -111,5 +112,6 @@ const mapStateToProps = state =>({
     totalItems: state.cart.totalItems,
     totalWishItems: state.wishlist.totalItems,
 })
-export default connect(mapStateToProps, {logout})(NavBarTest)
+export default connect(mapStateToProps, {logout})(withRouter(NavBarTest))
+// export default connect(mapStateToProps, { setAlert, login })(withRouter(Login));
 // export default Navbar

@@ -129,8 +129,8 @@ const Landing =({ getAllProducts, getAllProductsByFilter, products,loadMore})=>{
             changeSearch({...searchy})
         }
     const navCategories = categories.map(element => (
-        <li class="nav-item">
-            <div className="form-check" key={element.categoryId}>
+        <li class="nav-item" key={element.categoryId}>
+            <div className="form-check" >
                 <input className="form-check-input mt-3" type="radio" name="category" onChange={() => handleCategoryChange(`${element.categoryId}`)} id="exampleRadios1" value="option1" checked ={categoryId !== element.categoryId ? false:true} />
                 <label className="form-check-label mt-3" forHtml="exampleRadios1">
                     {element.categoryName}
@@ -146,8 +146,8 @@ const Landing =({ getAllProducts, getAllProductsByFilter, products,loadMore})=>{
                     <h6>Filter By Categories</h6>
                     <hr/>
                     <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <div className="form-check" key='All'>
+                    <li class="nav-item" key='All'>
+                        <div className="form-check" >
                             <input className="form-check-input mt-3" type="radio" name="category" onChange={() => handleCategoryChange('All')} id="exampleRadios1" value="option1" checked ={categoryId !== 'All' ? false:true} />
                             <label className="form-check-label mt-3" forHtml="exampleRadios1">
                                 All

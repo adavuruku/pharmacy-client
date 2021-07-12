@@ -36,7 +36,7 @@ const Routes = props => {
         <PrivateRoute exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/chat" component={ChatHome } />
         <AdminRoute exact path="/admin" component={Admin} />
-        <PrivateRoute exact path="/products/:inventoryId" component={OpenCart} />
+        <Route exact path="/products/:inventoryId" component={OpenCart} />
         <Route component={NotFound} />
       </Switch>
       </section>

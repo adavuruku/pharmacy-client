@@ -33,10 +33,21 @@ const CheckOutSummaryTwo =({productsList,payType,selectedLocation, saveCart})=>{
 
 
     const saveFinallyforPayOnDelivery = () => {
-        setisStartPay(true)
-        setTimeout(() => {
-            saveCart(productsList,selectedLocation,ispayNow)
-          }, 7000);
+        // ispayNow ? callPayment.current.changeShow():saveFinallyforPayOnDelivery()
+        if(selectedLocation){ //make sure user select a location 
+            if(ispayNow){
+                callPayment.current.changeShow()
+            }else{
+                setisStartPay(true)
+                setTimeout(() => {
+                    saveCart(productsList,selectedLocation,ispayNow)
+                }, 7000);
+            }
+        }else{
+            // open location box
+            callAllAddress.current.changeShow()
+        }
+        
     }
   const deliveryInfo = (
         <Accordion defaultActiveKey="0">
@@ -95,7 +106,7 @@ const CheckOutSummaryTwo =({productsList,payType,selectedLocation, saveCart})=>{
                 <CheckOutPay ref={callPayment}/>
                 <li className="list-group-item d-flex justify-content-between ">
                     {isStartPay ? 
-                    (<Spinner className="text-centre" animation="grow" variant="dark" />):(<Link to="/checkout"  className="btn btn-sm btn-success add-cart" onClick = {()=>ispayNow ? callPayment.current.changeShow():saveFinallyforPayOnDelivery()} >{ispayNow? 'Continue Payment':'Place Order'} </Link>)}
+                    (<Spinner className="text-centre" animation="grow" variant="dark" />):(<Link to="/checkout"  className="btn btn-sm btn-success add-cart" onClick = {()=> saveFinallyforPayOnDelivery()} >{ispayNow? 'Continue Payment':'Place Order'} </Link>)}
                 </li>
                 
             </ul>

@@ -90,6 +90,7 @@ const NavBarTest =({login:{isAuthenticated, loading, user}, logout,totalItems,to
                         {navCategories}
                     </NavDropdown>
                     <Nav.Link href="/chat">Chat Consultants</Nav.Link>
+                    <Nav.Link href="/about">About App</Nav.Link>
                     
                 </Nav>
                 <Nav className="nav-item ml-auto justify-content-end mr-50 col-6">

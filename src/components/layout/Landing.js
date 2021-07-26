@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect,useState } from 'react';
+import React, { Fragment, useEffect,useState,useCallback } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CartItem from './CartItem'

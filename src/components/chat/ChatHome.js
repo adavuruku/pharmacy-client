@@ -14,6 +14,7 @@ import RightMessage from './RightMessage';
 import LeftMessage from './LeftMessage';
 import io from 'socket.io-client'
 let socket;
+
 const ChatHome = ({userInfo}) => {
 	// console.log(userInfo)
     const [allUsers, setAllUsers] = useState([]) 
@@ -41,6 +42,9 @@ const ChatHome = ({userInfo}) => {
 			// setAllChat([...newChats])
 			scrollToBottom()
 			setAllChat(allChats => [...allChats, msg[0]]);
+			const chatMessage = document.querySelector(".chat-messages")
+			console.log(chatMessage, chatMessage.scrollTop)
+			// chatMessage.scrollTop = chatMessage.scrollHeight;
             // setMessages(messages => [...messages, msg]);
         })
     }, [])

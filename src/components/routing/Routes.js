@@ -14,6 +14,7 @@ import Orders from '../orders/Orders';
 import PrivateRoute from '../routing/PrivateRoute';
 import AdminRoute from '../routing/adminRoute';
 import ChatHome from '../chat/ChatHome';
+import About from '../layout/About';
 // import ProfileForm from '../profile-forms/ProfileForm';
 
 // import Profiles from '../profiles/Profiles';
@@ -30,6 +31,7 @@ const Routes = props => {
         <Route exact path="/login" component={LoginSignUp} />
         <Route exact path="/home" component={Landing} />
         <Route exact path="/carts" component={CheckOut} />
+        <Route exact path="/about" component={About} />
         <PrivateRoute exact path="/checkout" component={CheckOutTwo} />
         <PrivateRoute exact path="/wishlist" component={WishList} />
         <PrivateRoute exact path="/my/orders" component={Orders} />
